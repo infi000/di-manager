@@ -1,0 +1,32 @@
+@value siderWidth, headerHeight from '@/basic/Layout.scss';
+$extra-left: 24px + 22px + 18px;
+
+.path {
+  position: fixed;
+  z-index: 999;
+  left: calc(#{siderWidth} + #{$extra-left});
+  top: 0px;
+  height: headerHeight;
+  line-height: headerHeight;
+  padding-right: 24px;
+  white-space: nowrap;
+  background: linear-gradient(to left, rgba(#fff, 0.1), #fff 20px);
+  transition: left 0.2s;
+  display: flex;
+  align-items: center;
+  &:global(.collapsed) {
+    left: calc(80px + #{$extra-left});
+  }
+  > span {
+    &:first-child {
+      color: #333;
+      font-weight: 500;
+      a {
+        color: inherit;
+      }
+    }
+    &:not(:first-child):last-child {
+      color: #999;
+    }
+  }
+}

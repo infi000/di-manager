@@ -1,0 +1,348 @@
+// Layout 布局宽度
+@value layoutWidth: 1230px; // 最小宽度（防止宽度变小时，页面乱掉）
+/*-- 侧边栏 --*/
+// 宽度
+@value siderWidth: 170px;
+@value siderCollapsedWidth: 80px;
+// logo 高度
+@value logoHeight: 160px;
+@value logoCollapsedHeight: 100px;
+// 菜单高度
+@value menuHeight: 50px;
+/*-- 顶部高度 --*/
+@value headerHeight: 60px;
+/*-- 底部高度 --*/
+@value footerHeight: 50px;
+
+$error: #f74052;
+
+@mixin logo($x, $y, $width, $height, $logoHeight) {
+  display: inline-flex;
+  height: $logoHeight;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-end;
+  background: url('../assets/basic/logo.png') no-repeat;
+  background-position: $x $y;
+  background-size: $width $height;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 600;
+  transition: background 0.2s, width 0.2s, height 0.2s;
+}
+
+@mixin header($width, $left) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 999;
+  width: $width;
+  margin-left: $left;
+  height: headerHeight;
+  background: #fff;
+  padding: 0px 40px 0 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: width 0.2s, margin-left 0.2s;
+  .trigger {
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+}
+@mixin content($left) {
+  position: relative;
+  overflow-x: hidden;
+  margin-top: headerHeight;
+  padding: 20px 20px 0 20px;
+  background: #fff;
+  margin-left: $left;
+  height: calc(100vh - headerHeight - footerHeight);
+  transition: margin-left 0.2s;
+}
+@mixin footer($left) {
+  padding: 0px;
+  text-align: center;
+  font-size: 12px;
+  height: footerHeight;
+  line-height: footerHeight;
+  margin-left: $left;
+  filter: grayscale(100%) opacity(40%);
+  transition: margin-left 0.2s;
+}
+
+body {
+  overflow-x: hidden;
+  .basic-layout {
+    min-width: layoutWidth;
+    min-height: 100vh;
+    .sider {
+      position: fixed;
+      height: 100vh;
+      min-height: 100vh;
+      overflow: hidden;
+      &:hover {
+        overflow-y: scroll;
+      }
+      .logo {
+        @include logo(19px, 22px, 120px, 120px, logoHeight);
+      }
+      .logo-collapsed {
+        @include logo(10px, 24px, 60px, 60px, logoCollapsedHeight);
+      }
+      .menu {
+        font-size: 14px;
+        height: menuHeight;
+        line-height: menuHeight;
+      }
+      .sub-menu {
+        font-size: 14px;
+        :global {
+          .ant-menu-submenu-title {
+            font-size: 14px;
+            height: menuHeight;
+            line-height: menuHeight;
+          }
+        }
+      }
+    }
+    .header {
+      @include header(calc(100vw - siderWidth), siderWidth);
+    }
+    .header-collapsed {
+      @include header(calc(100vw - siderCollapsedWidth), siderCollapsedWidth);
+    }
+    .content {
+      @include content(siderWidth);
+    }
+    .content-collapsed {
+      position: relative;
+      @include content(siderCollapsedWidth);
+    }
+    .footer {
+      @include footer(siderWidth);
+    }
+    .user_name {
+      display: inline-block;
+      margin-left: 10px;
+      font-size: 500;
+    }
+    .footer-collapseds {
+      @include footer(siderWidth);
+    }
+  }
+}
+:global {
+  body {
+    //
+    // Reset
+    // -------------------------------------------------------------------------
+    //
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+    // Table
+    .ant-table {
+      .ant-table-tbody td {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        word-break: break-all;
+      }
+    }
+    .ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-header > table > .ant-table-thead > tr > th {
+      background-color: #fafafa;
+    }
+    .ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-header > table > .ant-table-thead > tr > th {
+      background-color: #fafafa;
+    }
+    
+    .ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-header > table > .ant-table-thead > tr > th {
+      background-color: #fafafa;
+    }
+    
+    .ant-table-small > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th {
+      background-color: #fafafa;
+    }
+    .ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-body > table > .ant-table-thead > tr > th {
+      background-color: #fafafa;
+    }
+    
+    // Form
+    .ant-form-item {
+      .ant-form-item-label {
+        line-height: 32px;
+        label {
+          font-weight: 500;
+        }
+      }
+      .ant-form-item-control-wrapper {
+        .ant-form-item .ant-form-item-control-wrapper {
+          width: 100%;
+        }
+        .ant-form-item-control {
+          line-height: 32px;
+        }
+      }
+      &.ant-form-item-with-help {
+        margin-bottom: 20px;
+        .ant-transfer-list {
+          border-color: $error;
+        }
+        .ant-input.ant-transfer-list-search {
+          border-color: #d9d9d9;
+          box-shadow: none;
+        }
+      }
+      // 错误提示
+      .ant-form-explain,
+      .ant-form-split {
+        position: absolute;
+        z-index: 2;
+        top: -24px;
+        left: 0;
+        padding: 3px 8px;
+        color: #fff !important;
+        font-size: 12px;
+        line-height: 20px;
+        background: $error;
+        border-radius: 3px;
+        box-shadow: 0 1px 3px rgba(#000, 0.3);
+        &::after {
+          content: '';
+          position: absolute;
+          left: 50%;
+          bottom: -4px;
+          border-top: 4px solid $error;
+          border-left: 4px solid transparent;
+          border-right: 4px solid transparent;
+          transform: translateX(-50%);
+        }
+      }
+    }
+
+    // Datepicker 选中样式修改
+    .ant-calendar-selected-day {
+      .ant-calendar-date {
+        color: #dcdcdc;
+      }
+    }
+  }
+
+  #nprogress {
+    pointer-events: none;
+  }
+
+  #nprogress .bar {
+    background: #29d;
+
+    position: fixed;
+    z-index: 1031;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 2px;
+  }
+
+  /* Fancy blur effect */
+  #nprogress .peg {
+    display: block;
+    position: absolute;
+    right: 0px;
+    width: 100px;
+    height: 100%;
+    box-shadow: 0 0 10px #29d, 0 0 5px #29d;
+    opacity: 1;
+
+    -webkit-transform: rotate(3deg) translate(0px, -4px);
+    -ms-transform: rotate(3deg) translate(0px, -4px);
+    transform: rotate(3deg) translate(0px, -4px);
+  }
+
+  /* Remove these to get rid of the spinner */
+  #nprogress .spinner {
+    display: block;
+    position: fixed;
+    z-index: 1031;
+    top: 15px;
+    right: 15px;
+  }
+
+  #nprogress .spinner-icon {
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+
+    border: solid 2px transparent;
+    border-top-color: #29d;
+    border-left-color: #29d;
+    border-radius: 50%;
+
+    -webkit-animation: nprogress-spinner 400ms linear infinite;
+    animation: nprogress-spinner 400ms linear infinite;
+  }
+
+  .nprogress-custom-parent {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .nprogress-custom-parent #nprogress .spinner,
+  .nprogress-custom-parent #nprogress .bar {
+    position: absolute;
+  }
+
+  @-webkit-keyframes nprogress-spinner {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  @keyframes nprogress-spinner {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+// 滚动条
+::-webkit-scrollbar {
+  & {
+    width: 6px;
+    height: 6px;
+  }
+  &-track {
+    background: #fafafa;
+  }
+  &-thumb {
+    background: #ddd;
+    border-radius: 3px;
+    &:hover {
+      background: #bbb;
+    }
+  }
+}

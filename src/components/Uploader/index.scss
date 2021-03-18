@@ -1,0 +1,35 @@
+:global {
+  .box {
+    margin-bottom: 15px;
+  }
+  .middle {
+    text-align: center;
+    font-weight: 500;
+  }
+  .progress {
+    margin: 5px auto;
+  }
+  .detail {
+    font-weight: 500;
+    .check_icon {
+      font-size: 40px;
+      display: block;
+    }
+    .middle_detail {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .left {
+      margin-right: 40px;
+    }
+    .btn {
+      background-color: white;
+      color: #333;
+      font-weight: normal;
+      border-color: #333;
+    }
+  }
+}
+.modal {
+  width: 800px !important;
+}

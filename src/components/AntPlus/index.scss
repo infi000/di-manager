@@ -1,0 +1,46 @@
+// Input
+:global {
+  .ant-plus-input {
+    display: flex;
+    &.ant-plus-input-with-count {
+      align-items: flex-end;
+      .count {
+        display: inline-block;
+        height: 20px;
+        color: #ddd;
+        font-size: 12px;
+        line-height: 20px;
+        background: #fff;
+        &.red {
+          color: #f74052;
+        }
+      }
+      input {
+        &:-webkit-autofill {
+          -webkit-box-shadow: 0 0 0 100px #fff inset;
+        }
+        &[disabled] {
+          + .ant-input-suffix .count,
+          + .count {
+            display: none;
+          }
+        }
+        + .ant-input-suffix .count {
+          margin-right: -4px;
+          padding-left: 8px;
+        }
+      }
+      textarea + .count {
+        $gap: 1px;
+        position: relative;
+        right: 1px + $gap;
+        bottom: 5px + $gap;
+        padding-left: 6px;
+        padding-right: 6px;
+        white-space: nowrap;
+        border-bottom-right-radius: 20px;
+        transform: translateX(-100%);
+      }
+    }
+  }
+}

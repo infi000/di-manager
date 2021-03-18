@@ -1,0 +1,28 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+
+# production
+/build
+output
+out
+# misc
+.DS_Store
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 自定义 (create-react-app 默认配置之外的，加在下面)
+.vscode
+.idea
+package-lock.json
+proxy.js
+yarn.lock
+git.sh
+report.**.*.json
+*.zip
+output.tar.gz
+proxy.js
+proxy-dev.js

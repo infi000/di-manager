@@ -1,0 +1,79 @@
+.list-page {
+  :global {
+    .arrow-icon {
+      margin-right: 15px;
+      float: left;
+    }
+    .arrow-rotate {
+      transform-origin: center center;
+      transform: rotate(180deg);
+    }
+    // List 页面
+    .list-page-form {
+      $list-item-x-gap: 24px; // Form Item x 轴间距
+      $list-item-y-gap: 12px; // Form Item y 轴间距
+      $list-label-width: 80px; // Form Label 宽度
+      $list-field-width: calc(100% - 80px); // Form Field 宽度
+
+      display: flex;
+      flex-wrap: wrap;
+      
+      > * {
+        display: flex;
+        align-items: center;
+        width: calc(1 / 4 * (100% - #{$list-item-x-gap} * 3));
+        margin-right: $list-item-x-gap;
+        margin-bottom: $list-item-y-gap;
+        &:nth-child(4n) {
+          margin-right: 0;
+        }
+      }
+      .ant-form-item {
+        margin-bottom: 12px;
+        .ant-form-item-label {
+          flex-shrink: 0;
+          width: $list-label-width;
+          line-height: 32px;
+          text-align: left;
+        }
+        .ant-form-item-control-wrapper {
+          width: $list-field-width;
+          .ant-calendar-picker {
+            width: 100%;
+          }
+        }
+      }
+      @for $i from 1 through 4 {
+        footer:nth-child(#{$i}) {
+          margin-left: 0;
+          width: calc(1 / 4 * (100% - #{$list-item-x-gap} * 3));
+        }
+      }
+      footer {
+        width: calc(
+          (1 / 2 * (100% - #{$list-item-x-gap} * 3)) - #{$list-label-width} + #{$list-item-x-gap}
+        );
+        // margin-left: $list-label-width;
+        margin-right: 0;
+        > * {
+          + * {
+            margin-left: $list-item-x-gap;
+          }
+          &:not(.ant-btn) {
+            color: #666;
+            font-weight: 500;
+            white-space: nowrap;
+            &:not(a) {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+    .footer {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+    }
+  }
+}
