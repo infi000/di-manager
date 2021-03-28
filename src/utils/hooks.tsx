@@ -5,7 +5,7 @@ import { isObject } from 'util';
 
 const { useState, useRef, useEffect, useReducer, useMemo, useContext, useCallback } = React;
 
-type Columns = { render?: (text: any, record: any, index: number) => React.ReactNode | undefined; width?: number; key?: any; title?: string, dataIndex?: any, disabled?: boolean }[];
+type Columns = { render?: (text: any, record: any, index: number) => React.ReactNode | undefined; width?: number; key?: any; title?: string, dataIndex?: any, disabled?: boolean, fixed?:boolean | "left" | "right" | undefined }[];
 
 const renderNull = (text: number | null) => ((text === null || !text) && text !== 0 ? '-' : text);
 const mathScrollX = (columns: Columns) =>

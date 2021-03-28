@@ -42,21 +42,21 @@ const FormWrap = (props: IInProps) => {
     validateFields(async (err, val) => {
       if (!err) {
         await postPostLogin(val);
-        history.push('/');
+        history.push('/gameManager');
       }
     })
   }
   const handleRegister = () => {
-    history.push('/register');
+    history.push('register');
   }
   return <Wrap><Form {...formItemLayout} >
 
-    <Form.Item label="姓名">
-      {getFieldDecorator('uname', {
+    <Form.Item label="用户名">
+      {getFieldDecorator('mname', {
         rules: [
           {
             required: true,
-            message: '输入姓名',
+            message: '输入用户名',
           },
         ],
       })(<Input />)}
@@ -73,12 +73,9 @@ const FormWrap = (props: IInProps) => {
     </Form.Item>
   </Form>
     <FormButtonWrap>
-      <Button onClick={handleRegister} shape="round">注册</Button>
+      {/* <Button onClick={handleRegister} shape="round">注册</Button> */}
       <Button onClick={handleSubmit} type='danger' shape="round">登陆</Button>
     </FormButtonWrap>
-    <WrapInfo>
-      <i>已经获得挑战号(原会员号)的团队，使用挑站号为用户名，领队联系电话为登陆密码</i>
-    </WrapInfo>
   </Wrap>
 }
 

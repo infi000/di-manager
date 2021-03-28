@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const Wrap = styled.a`
     margin-right:8px;
     display:inline-block;
+    color: #165588;
 `
 interface IProps {
     children: string;

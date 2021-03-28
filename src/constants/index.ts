@@ -6,6 +6,8 @@ export const MERCHANT_INFO_LIST = new Map<any, number>([]);
 export const MERCHANT_ARR = (arr: Array<any>) =>
   arr.map((txt: any) => MERCHANT_INFO_LIST.get(txt));
 
+export const PAGE_SIZE = 20;
+
 export enum EUtype {
   '学生' = '1',
   '领队' = '2',
@@ -21,6 +23,18 @@ export enum EIsPay {
   '支付成功' = '1',
   '支付失败' = '4'
 }
+
+/**
+ * 支付方式
+ */
+
+ export enum EPayType {
+  '未支付' = '0',
+  '在线支付' = '1',
+  '线下支付' = '2'
+}
+
+
 /**
  * 用户角色
  */
@@ -41,7 +55,7 @@ export const ISPAY_MAP = new Map<keyof typeof EIsPay, EIsPay>([
 /**
  * 年龄组别
  */
-export const AGE_TYPE_ARR = ['RS' ,'EL' ,'ML' ,'SL' ,'UL']
+ export const AGE_TYPE_ARR: TAgeType[] = ['EL', 'ML', 'SL', 'UL', 'RS', 'FF低龄', 'FF高龄'];
 
 
 export const XUANCHUAN_URL = '/xuanchuan.jpg';

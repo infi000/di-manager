@@ -16,12 +16,6 @@ const { Header, Sider, Content, Footer } = AntLayout;
 const { SubMenu, Item } = Menu;
 const { Option } = Select;
 
-const api = {
-  // 获取head查询数据
-  getMap: () => fetch('/ui/mc/getmerchantinfolistforchange', {}),
-  // 切换商户
-  getChangeStore: (params = {}) => fetch('/ui/mc/changemerchantidentity', { params }),
-};
 
 class Layout extends Component {
   constructor(props) {
@@ -68,7 +62,7 @@ class Layout extends Component {
   };
 
   render() {
-    const { openKeys, isCollapsed, merchantInfoList, currentMerchantId } = this.state;
+    const { openKeys, isCollapsed } = this.state;
     const {
       powerInfo,
       userName,
@@ -136,24 +130,10 @@ class Layout extends Component {
             <Icon
               className={styles.trigger}
               type={isCollapsed ? 'menu-unfold' : 'menu-fold'}
-              onClick={this.onCollapsedChange}
             />
             <div>
-              <Select
-                value={currentMerchantId}
-                style={{ width: 160, marginRight: 10 }}
-                onChange={this.handleChange}
-                placeholder="请选择商户"
-              >
-                {merchantInfoList.map((item) => (
-                  <Option key={item.merchant_id} value={item.merchant_id}>
-                    {item.merchant_name}
-                  </Option>
-                ))}
-              </Select>
               <AvatarImg />
               <span className={styles.user_name}>{userName}</span>
-              <Help />
             </div>
           </Header>
           <Content className={isCollapsed ? styles.contentCollapsed : styles.content}>

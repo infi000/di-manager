@@ -29,6 +29,8 @@ module.exports = {
   webpack: (config) => {
     // 1. 添加 @babel/polyfill
     config.entry.unshift('@babel/polyfill');
+    // config.output.path = path.resolve(__dirname, 'build/sass'),
+    // config.output.publicPath = '/sass/';
     // 2. 添加 alias extensions
     config.resolve.alias = { ...config.resolve.alias, ...alias };
     config.resolve.extensions = [...config.resolve.extensions, ...extensions];

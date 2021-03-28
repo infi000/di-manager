@@ -32,22 +32,6 @@ const HomePage = (props:IProps) => {
   const { userInfo } = props;
   const history = useHistory();
   const handleSignUp = () => {
-    switch (userInfo.utype) {
-      case '1':
-        break;
-      case '2':
-        history.push('/team');
-        break;
-      case '3':
-        
-        break;
-      case '100':
-        
-        break;
-      default:
-        history.push('/login');
-        break;
-    }
   }
   return  <div className='container'>
       <Wrap>

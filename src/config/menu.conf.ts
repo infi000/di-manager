@@ -38,15 +38,21 @@ type TMenuItem = {
 }
 type childItem = TSomeRequired<TMenuItem, 'component'>;
 const load = (loader: any) => Loadable({ loader, loading: Loading });
-const DevToolsManage = load(() => import('@/pages/DevToolsManage'));
 export const NotFound = load(() => import('@/pages/NotFound'));
 export const NotPower = load(() => import('@/pages/NotPower'));
 
 // 首页
 const HomePage = load(() => import('@/pages/HomePage'));
-const Register = load(() => import('@/pages/Register'));
 const Login = load(() => import('@/pages/Login'));
-const TeamManager = load(() => import('@/pages/TeamManager'));
+const GameManager = load(() => import('@/pages/GameManager'));
+const GameTopicManager = load(() => import('@/pages/GameTopicManager'));
+const GameJudgeManager = load(() => import('@/pages/GameJudgeManager'));
+const GameReffer = load(() => import('@/pages/GameReffer'));
+const GameFileDesc = load(() => import('@/pages/GameFileDesc'));
+const RefferManager = load(() => import('@/pages/RefferManager'));
+const LeaderManager = load(() => import('@/pages/LeaderManager'));
+const GameRelease = load(() => import('@/pages/GameRelease'));
+const SignUpManager = load(() => import('@/pages/SignUpManager'));
 
 
 
@@ -58,10 +64,6 @@ const TeamManager = load(() => import('@/pages/TeamManager'));
 // 不会验证权限和调用基础信息接口的白班路由
 export const blankRoutes = [
   {
-    path: '/register', // 注册
-    component: Register,
-  },
-  {
     path: '/login', // 登陆
     component: Login,
   },
@@ -70,24 +72,58 @@ export const blankRoutes = [
 
 export const menus: TMenuItem[] = [
   {
-    path: '/', // 主页
-    component: HomePage,
+    path: '/gameManager', 
+    component: GameManager,
     isMenu: true,
-    name:'主页',
-    children:[
-      {
-        path: '/register', // 注册
-        component: Register,
-        name:'注册',
-        isMenu: true
-      },
-    ]
+    name:'赛事管理',
   },
   {
-    path: '/register', // 注册
-    component: Register,
+    path: '/gameTopicManager', 
+    component: GameTopicManager,
+    isMenu: false,
+    name:'赛事题目管理',
+  },
+  {
+    path: '/gameFileDesc', 
+    component: GameFileDesc,
+    isMenu: false,
+    name:'赛事题目-文件描述',
+  },
+  {
+    path: '/gameJudgeManager', 
+    component: GameJudgeManager,
+    isMenu: false,
+    name:'赛事题目-评分标准',
+  },
+  {
+    path: '/gameReffer', 
+    component: GameReffer,
+    isMenu: false,
+    name:'赛事题目-裁判类型',
+  },
+  {
+    path: '/refferManager', 
+    component: RefferManager,
     isMenu: true,
-    name:'注册2'
+    name:'裁判管理',
+  },
+  // {
+  //   path: '/gameRelease', 
+  //   component: GameRelease,
+  //   isMenu: true,
+  //   name:'比赛发布',
+  // },
+  {
+    path: '/leaderManager', 
+    component: LeaderManager,
+    isMenu: true,
+    name:'领队管理',
+  },
+  {
+    path: '/signUpManager', 
+    component: SignUpManager,
+    isMenu: true,
+    name:'报名管理'
   },
 ];
 

@@ -17,7 +17,8 @@ declare type TSomeRequired<T, S extends keyof T> = Omit<T, S> &
  */
 declare type TModalData<T = Dictionary<any>> = {
   show: boolean;
-  data: T
+  type?: 'create' | 'edit' | 'view' ;
+  data: T;
 }
 declare interface IFetchParams {
   type?: 'GET' | 'POST';
@@ -63,41 +64,50 @@ declare interface IReducerStoreResult<S, A> {
   action: A;
 }
 
+/**
+ * 页面分页
+ */
+declare type TPage = {page_no: number;page_size: number};
 
-declare type TFetchMsg<T> = {res:'succ' | 'err'; errdata: string; data:Dictionary<T>};
+/**
+ * 借口分页
+ */
+declare type TPageFetch = {count: number; offset: number};
 
+
+declare type TFetchMsg<T> = {res: 'succ' | 'err'; errdata: string; data: Dictionary<T>};
 /**
  * 年龄组别
  */
-declare type TAgeType = 'RS' |'EL' |'ML' |'SL' |'UL';
+ declare type TAgeType = 'RS' | 'EL' | 'ML' | 'SL' | 'UL' | 'FF低龄' | 'FF高龄';
 
-enum EUtype {
-  '学生' = '1',
-  '领队' = '2',
-  '裁判' = '3',
-  '会员号' = '100'
+
+enum EMtype {
+  '超级管理员' = '1',
+  '普通管理员' = '2',
 }
+
+enum EStatus {
+  '正常' = '1',
+  '删除' = '-1',
+}
+
+
 /**
  * 用户信息
  */
 declare interface IUserInfo {
-  id?:string;
-  uid?:string;
-  uname:string;
-  phone:number;
-  utype: EUtype;
-  pass:string;
-  province?:string;
-  realname?:string;
-  age?:string;
-  school?:string;
-  schoolename?:string;
-  ucard?:string; // 身份证
-  head?:string;
-  email?:string;
+  id?: string;
+  uid?: string;
+  mname: string;
+  phone: number;
+  mtype: EMtype;
+  status: EStatus;
+  ctime?: string;
 }
 
 
 declare interface IBasicState {
-  userInfo: IUserInfo,
+  userInfo: IUserInfo;
+  history: any;
 }

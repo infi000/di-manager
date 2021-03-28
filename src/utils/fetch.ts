@@ -76,7 +76,7 @@ const fetch: any = (url: string, { type = 'GET', params, notFormat = false, errM
       ...defaultOptions, ...otherOptions, method: type, redirect: 'manual'
     };
     const token = localStorage.getItem('token') || '';
-    if(token){
+    if (token) {
       params = params ? { ...params, token } : { token };
     }
     if (params) {
@@ -86,6 +86,22 @@ const fetch: any = (url: string, { type = 'GET', params, notFormat = false, errM
         newOptions = {
           ...newOptions,
           body: notFormat ? params : stringifyObject(params),
+        };
+      } else if (type === 'FORM') {
+        const formData = new FormData(); //新建一个formData对象
+        Object.entries(params).forEach((item: any) => {
+          const [key, val] = item;
+          const { file } = val || {};
+          formData.append(key, file || val);
+        })
+        newOptions = {
+          ...newOptions,
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          body: formData,
         };
       }
     }
@@ -116,10 +132,10 @@ const fetch: any = (url: string, { type = 'GET', params, notFormat = false, errM
           return resolve(data);
         }
         // 0：token过期；-1缺少token；-2token无效；-10异常；-11不存在；-20账号未审核；-21账号审核失败；-22账号已删除
-        if ([0,-1,-2,-10,-11,-20,-21,-22].includes(code)){
-          if(window.location.pathname !== '/'){
-              // token无效 未登录跳转到首页
-              window.location.href='/';
+        if ([0, -1, -2, -10, -11, -20, -21, -22].includes(code)) {
+          if (window.location.pathname !== '/di/login') {
+            // token无效 未登录跳转到首页
+            window.location.href = '/di/login';
           }
           return
         }
@@ -129,7 +145,7 @@ const fetch: any = (url: string, { type = 'GET', params, notFormat = false, errM
         return reject(new Error(err));
       })
       .catch((err) => {
-        console.log("走到这3",err);
+        console.log("走到这3", err);
         message.error(err.message);
         nprogress.done();
         reject(err);

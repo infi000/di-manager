@@ -1,19 +1,15 @@
 import { serviceGetUserInfo } from './services';
 
 const DEFAULT_USERINFO: Partial<IUserInfo> = {
-  uname: undefined,
+  mname: undefined,
   phone: undefined,
-  utype: undefined,
-  pass: undefined,
-  province: undefined,
-  realname: undefined,
-  age: undefined,
-  school: undefined,
-  schoolename: undefined,
-  ucard: undefined, // 身份证
-  head: undefined,
-  email: undefined,
+  mtype: undefined,
+  id: undefined,
+  uid: undefined,
+  status: undefined,
+  ctime: undefined
 }
+
 const model = {
   state: {
     isLoading: false,
@@ -37,15 +33,14 @@ const model = {
         if(params.token){
           localStorage.setItem('token', params.token);
         }
-        if(params.utype){
-          localStorage.setItem('utype', params.utype);
+        if(params.mtype){
+          localStorage.setItem('mtype', params.mtype);
         }
       },
       async checkLogin() {
         basic.setState({ isLoading: true });
         try {
           const d: IUserInfo= await serviceGetUserInfo();
-          console.log("d",d);
           if (d) {
             basic.updateUserInfo({ ...d });
           }

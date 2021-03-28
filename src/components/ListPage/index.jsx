@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Table, Modal, Row, Col, Icon, Popconfirm } from 'antd';
 import { Form } from '@/components/AntPlus';
-import { DesensitExport } from '@/components/Desensit';
 import { listPage } from './index.scss';
 /**
  * ListPage - 列表页通用组件
@@ -19,10 +18,9 @@ import { listPage } from './index.scss';
  * @param {array} fields - 表单组件集合 (若表单域 id 为 `ignore` 开头，则不收集表单域的值)
  * @param {object} params - 表单数据
  * @param {function} onSearch - 根据筛选项查询
- * @param {function} onReset - 重置筛选项
  * @param {node} formFooter - 其它节点
- * @param {boolen} hasExport - 是否展示导出按钮
- *
+\ * @param {boolen} hideFormSearch - 不展示formSearch
+\ *
  * Table
  * @param {function} getList - 获取 Table 数据
  * @param {object} listLoading - 获取 `data` 时的 loading
@@ -56,17 +54,16 @@ import { listPage } from './index.scss';
 class ListPage extends Component {
   constructor(props) {
     super(props);
-    const { btnAdd, power } = props;
-    this.showBtnAdd = Boolean(btnAdd) && power;
+    const { btnAdd } = props;
+    this.showBtnAdd = Boolean(btnAdd);
     this.state = {
-      exportVisible: false,
       exportVal: {},
       isShow: true,
       otherHeight: 0,
     };
   }
   componentDidMount() {
-    const { getList, history, noGetList = false } = this.props;
+    const { history, } = this.props;
     const $contentBody = document.getElementsByClassName('ant-layout-content') ? document.getElementsByClassName('ant-layout-content')[0] : '';
     const $formBody = document.getElementsByClassName('list-page-form') ? document.getElementsByClassName('list-page-form')[0] : '';
     if ($contentBody && $formBody) {
@@ -78,7 +75,7 @@ class ListPage extends Component {
         otherHeight: 520
       });
     }
-    if (!noGetList) getList();
+
     if (history !== undefined) {
       const { pathname: curPath } = history.location;
       history.listen(({ pathname: nextPath }) => {
@@ -88,24 +85,11 @@ class ListPage extends Component {
       });
     }
   }
-  componentWillUnmount() {
-    if (!this.props.noReset) {
-      if (!this.notReset) {
-        const { onReset } = this.props;
-        onReset();
-      }
-    }
-  }
-  // 重置表单筛选项
-  onBtnReset = () => {
-    const { form, onReset, getList } = this.props;
-    form.resetFields();
-    onReset();
-    getList();
-  };
+
+
   // 提交表单
   onSubmit = (isExport) => {
-    const { hasExportModal, params, form, exportFunc, onSearch } = this.props;
+    const { form, exportFunc, onSearch } = this.props;
     form.validateFieldsAndScroll(async (err, values) => {
       if (err) return;
       Object.keys(values).forEach((key) => {
@@ -113,24 +97,14 @@ class ListPage extends Component {
       });
       // 搜索
       if (!isExport) {
-        onSearch({ ...values, page_no: 0, page_size: params.page_size });
+        onSearch({ ...values });
         return;
-      }
-      // 导出
-      if (hasExportModal) {
-        this.setState({ exportVisible: true, exportVal: values });
-      } else {
+      }else{
         exportFunc(values);
       }
     });
   };
-  // 确认导出
-  onExport = () => {
-    const { exportFunc } = this.props;
-    const { exportVal } = this.state;
-    this.setState({ exportVisible: false });
-    exportFunc(exportVal);
-  };
+
   // 分页展示总页数
   showTotal = () => {
     const { total } = this.props;
@@ -155,16 +129,18 @@ class ListPage extends Component {
     });
   };
   render() {
-    const { exportVisible, exportVal, isShow, otherHeight } = this.state;
+    const { isShow, otherHeight } = this.state;
     const {
       className,
       btnAdd,
       pageFooter,
       // Form
       form,
-      fields,
+      fields = <></>,
       params,
+      pageInfo={},
       formFooter,
+      hideFormSearch,
       // Table
       listLoading,
       columns,
@@ -176,20 +152,10 @@ class ListPage extends Component {
       onNav,
       scroll,
       expandedRow,
-      // export
-      hasExport,
-      hasExportModal,
-      hideExport,
-      exportBody,
-      exportName, // 导出的自定义名字
+      defaultExpandAllRows,
+      bordered,
       // hasOtherBtn 除搜索和重置按钮的其他按钮🔘
       hasOtherBtn,
-      hasDesensitExport,
-      onDesensitExportOk,
-      exportBillName,
-      onDesensitExportCancel,
-      moreInfo = null,
-      moreInfoData = null,
     } = this.props;
     if (scroll && scroll.y) {
       scroll.y = otherHeight;
@@ -203,6 +169,8 @@ class ListPage extends Component {
         dataSource: data,
         footer: tableFooter,
         scroll,
+        defaultExpandAllRows,
+        bordered,
         size: 'small',
       };
       // antd中 table中expandedRowRender与scroll不可同时使用
@@ -222,14 +190,6 @@ class ListPage extends Component {
             </Button>
           )}
         </div>
-        {/* <div style={{ display: 'flex' }}> */}
-        {this.props.icon ? (
-          <Icon
-            className={isShow ? 'arrow-icon' : 'arrow-rotate'}
-            type="down"
-            onClick={this.hiddenSearch}
-          />
-        ) : null}
         <Form
           style={!isShow ? { display: 'none' } : {}}
           className="list-page-form"
@@ -237,24 +197,18 @@ class ListPage extends Component {
           onSubmit={() => this.onSubmit(false)}
           fields={[fields].concat(
             <>
-              <footer>
+            {!hideFormSearch &&  <footer>
                 {this.props.hideSearch ? null : <Button htmlType="submit">{this.props.searchName ? this.props.searchName : '搜索'}</Button>}
-                {this.props.hideSearch || this.props.hideReset ? null : <a onClick={this.onBtnReset}>重置筛选项</a>}
                 {formFooter}
-              </footer>
+              </footer>}
               <footer
                 style={{
-                  justifyContent: 'flex-start',
+                  justifyContent: 'flex-end',
                   width: '100%',
                   borderTop: '1px solid #e8e8e8',
                   paddingTop: '12px',
                 }}
               >
-                {hasExport && !hideExport && (
-                  <Button onClick={() => this.onSubmit(true)}>
-                    {exportName ? `${exportName}` : '导出'}
-                  </Button>
-                )}
                 {hasOtherBtn &&
                   hasOtherBtn.map((item, index) => {
                     const { power = 1 } = item;
@@ -272,56 +226,17 @@ class ListPage extends Component {
           )}
           data={params}
         />
-        {moreInfo && moreInfo(moreInfoData)}
-        {/* </div> */}
+
         <Table
           {...tableProps()}
-          pagination={{
-            current: params.page_no + 1, // 后端初始页数为 0，所以前端展示时需要加 1
-            pageSize: params.page_size,
+          pagination={true?{
+            current: pageInfo.page_no, // 后端初始页数为 0，所以前端展示时需要加 1
+            pageSize: pageInfo.page_size || 1000,
             total,
             showTotal: this.showTotal,
             onChange: onNav,
-            showSizeChanger: true,
-            pageSizeOptions: this.props.hideSearch ? ['20'] : ['20', '50', '100'],
-            onShowSizeChange: this.props.hideSearch ? () => {} : this.onShowSizeChange
-          }}
+          }:undefined}
         />
-        {hasExport && hasExportModal && (
-          <Modal
-            width={600}
-            title="导出信息"
-            closable={false}
-            visible={exportVisible}
-            onOk={this.onExport}
-            onCancel={() => this.setState({ exportVisible: false })}
-            okText="确认"
-            cancelText="取消"
-          >
-            <>
-              {exportBody(exportVal).map((item, num) => (
-                <Row key={num} style={{ marginBottom: '10px' }}>
-                  {item.map((ele, index) => (
-                    <div key={index}>
-                      <Col span={4} style={{ textAlign: 'left' }}>
-                        {`${ele.name}：`}
-                      </Col>
-                      <Col span={item.length === 1 ? 20 : 8}>{ele.value || '--'}</Col>
-                    </div>
-                  ))}
-                </Row>
-              ))}
-            </>
-          </Modal>
-        )}
-        {!!hasDesensitExport && (
-          <DesensitExport
-            visible={hasDesensitExport}
-            onOk={onDesensitExportOk}
-            onCancel={onDesensitExportCancel}
-            billName={exportBillName}
-          />
-        )}
         {pageFooter && <footer className="footer">{pageFooter}</footer>}
       </div>
     );
@@ -329,3 +244,6 @@ class ListPage extends Component {
 }
 
 export default ListPage;
+
+            {/* pageSizeOptions: this.props.hideSearch ? ['20'] : ['20', '50', '100'],
+            onShowSizeChange: this.props.hideSearch ? () => {} : this.onShowSizeChange */}

@@ -8,6 +8,8 @@ const generateMenu = (power) => {
     if (item.key === '/') {
       return item;
     }
+    if (!item.isMenu ) return null;
+
     // power 中存在 key && 菜单不存在子菜单
     if (!item.children) {
       return {

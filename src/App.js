@@ -43,36 +43,20 @@ const BlankRoutes = (props) => {
     {
       routesComponents.map((item) => <Route exact key={item.path} path={`${path + item.path}`} component={item.component} />)
     }
-    {/* <Route path="*" exact component={NotPower}/> */}
   </div>;
 };
-
-// const ConnectedRoutes = withRouter(
-//   connect()(BlankRoutes),
-// );
-
-const ConnectedRoutes2 = withRouter(
-  connect(mapStateToProps)((props) => {
-    return (
-      <>
-        {blankRoutes.map(({ path, component}) => {
-          return <Route exact key={path} path={path} component={component} />;
-        })}
-      </>
-    );
-  }),
-);
 const App = () => (
   <ConfigProvider locale={zhCN}>
     <Provider store={store}>
       <StoreContext.Provider value={store}>
         <BrowserRouter>
           <Switch>
-          <ConnectedRoutes2 />
+          <BlankRoutes path='/di' routesComponents={blankRoutes} />
             <Layout>
               <ConnectedRoutes />
             </Layout>
           </Switch>
+
         </BrowserRouter>
       </StoreContext.Provider>
     </Provider>
