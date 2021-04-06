@@ -2,7 +2,7 @@ import fetch from '@/utils/fetch';
 import { ITableItem } from './type';
 
 /**
- * 获取题目
+ * 获取裁判
  * @param params
  * @returns
  */

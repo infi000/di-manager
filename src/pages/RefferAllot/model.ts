@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import qs from 'qs';
-import { serviceGetTableList, servicePostAudit, servicePostBatch } from './services';
+import { serviceGetTableList, servicePostSetJudge } from './services';
 import { NAME_SPACE } from './constants';
 import { IState, ITableItem } from './type';
 
@@ -10,9 +10,8 @@ const state: {
   serchParams: {};
   modalData: {
     show: boolean;
-    type?: 'batchAdd';
-    data: {uids: string};
-};
+    data: { qid: string; jtid: string };
+  };
   tablePage: TPage;
   tableListTotal: number;
 } = {
@@ -20,7 +19,7 @@ const state: {
   tableListTotal: 0,
   tablePage: { page_no: 1, page_size: PAGE_SIZE },
   serchParams: {},
-  modalData: { show: false, data: { uids: '' }, type: 'batchAdd' },
+  modalData: { show: false, data: { qid: '', jtid: '' } },
 };
 
 export const model = {
@@ -60,41 +59,32 @@ export const model = {
        * @param {IState['serchParams']} [params]
        */
       getTableList(params?: IState['serchParams']) {
+        console.log(params);
         params && store.updataSerchParams(params);
         const _params = params || store.state().serchParams;
+        console.log("_params",_params);
         const { tablePage } = store.state();
         const { page_size, page_no } = tablePage;
         const offset = (page_no - 1) * page_size;
-        const { sid } = store.state();
         serviceGetTableList({
-          ..._params, sid, offset, count: page_size
+          ..._params
         }).then((d) => {
           console.log(d);
-          const { total = 0, users = [] } = d;
-          store.updateTableList(users || []);
-          store.updateTableListTotal(total);
+          const { total = 0, quesjts = [] } = d;
+          store.updateTableList(quesjts || []);
+          store.updateTableListTotal(total || (quesjts || []).length);
         }).catch((err: any) => console.log(err));
       },
       /**
-       *审核
+       * 设置裁判
        *
-       * @param {({uid: string; status: '1'| '4'})} params
+       * @param {{qid: string; uids: string; jtid: string}} params
        */
-      postAudit(params: {uid: string; status: '1'| '4'}) {
-        servicePostAudit(params).then(() => {
-          // cb
+      postSetJudge(params: { qid: string; uids: string; jtid: string }) {
+        servicePostSetJudge({ ...params }).then(() => {
+          message.success('设置成功');
+          store.updateModalData({ show: false, data: { qid: '', jtid: '' } });
           store.getTableList();
-        });
-      },
-      /**
-       *批量分配到比赛
-       *
-       * @param {{uids: string; sid: string}} params
-       */
-      postBatch(params: {uids: string; sid: string}) {
-        servicePostBatch(params).then(() => {
-          store.getTableList();
-          store.updateModalData()
         });
       },
       /**

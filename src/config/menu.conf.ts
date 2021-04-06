@@ -50,6 +50,7 @@ const GameJudgeManager = load(() => import('@/pages/GameJudgeManager'));
 const GameReffer = load(() => import('@/pages/GameReffer'));
 const GameFileDesc = load(() => import('@/pages/GameFileDesc'));
 const RefferManager = load(() => import('@/pages/RefferManager'));
+const RefferAllot = load(() => import('@/pages/RefferAllot'));
 const LeaderManager = load(() => import('@/pages/LeaderManager'));
 const GameRelease = load(() => import('@/pages/GameRelease'));
 const SignUpManager = load(() => import('@/pages/SignUpManager'));
@@ -105,8 +106,31 @@ export const menus: TMenuItem[] = [
     path: '/refferManager', 
     component: RefferManager,
     isMenu: true,
-    name:'裁判管理',
+    name:'裁判审核',
+  },{
+    path: '/refferAllot', 
+    component: RefferAllot,
+    isMenu: true,
+    name:'裁判分配',
   },
+  // {
+  //   path: '/reffer', 
+  //   component: RefferManager,
+  //   isMenu: true,
+  //   name:'裁判管理',
+  //   children:[{
+  //     path: '/refferManager', 
+  //     component: RefferManager,
+  //     isMenu: true,
+  //     name:'裁判审核',
+  //   },{
+  //     path: '/refferAllot', 
+  //     component: RefferAllot,
+  //     isMenu: true,
+  //     name:'裁判分配',
+  //   }
+  // ]
+  // },
   // {
   //   path: '/gameRelease', 
   //   component: GameRelease,

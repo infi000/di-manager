@@ -43,7 +43,7 @@ const CreateEditModal = (props: IProps) => {
         if (modalData.type == 'create') {
           postCreate(values);
         }
-        if (modalData.type = 'edit') {
+        if (modalData.type == 'edit') {
           postModify({ ...values, sid: memoModalData.id });
         }
       }

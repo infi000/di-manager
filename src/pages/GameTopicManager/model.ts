@@ -74,7 +74,7 @@ export const model = {
       },
       getTableList(params?: IState['serchParams']) {
         params && store.updataSerchParams(params);
-        const _params = params || store.serchParams;
+        const _params = params || store.state().serchParams;
         const { tablePage } = store.state();
         const { page_size, page_no } = tablePage;
         const offset = (page_no - 1) * page_size;

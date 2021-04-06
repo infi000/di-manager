@@ -82,7 +82,7 @@ export const model = {
       },
       getTableList(params?: IState['serchParams']) {
         params && store.updataSerchParams(params)
-        const _params = params || store.serchParams;
+        const _params = params || store.state().serchParams;
         const { qid } = store.state();
         serviceGetTableList({ ..._params, qid }).then((d: any) => {
           const { total = 0, judges = [] } = d;

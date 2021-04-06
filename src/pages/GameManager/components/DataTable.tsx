@@ -206,7 +206,7 @@ const DataTable = (props: IProps) => {
         listLoading={false} // 获取数据 loading
         columns={columns} // Table 组件 `columns`
         rowKey='id' // table row 唯一标识，不是 `id` 时传入
-        rowSelection={rowSelection}
+        // rowSelection={rowSelection}
         hideFormSearch={true}
         data={tableList} // 列表数据
         scroll={{ x: scrollX, y: 460 }}

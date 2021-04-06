@@ -187,7 +187,7 @@ const DataTable = (props: IProps) => {
         onSearch={getTableList} // 查询
         columns={columns} // Table 组件 `columns`
         rowKey='id' // table row 唯一标识，不是 `id` 时传入
-        rowSelection={rowSelection}
+        // rowSelection={rowSelection}
         data={tableList} // 列表数据
         scroll={{ x: scrollX, y: 460 }}
       />

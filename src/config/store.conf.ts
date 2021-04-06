@@ -15,6 +15,7 @@ import gameJudgeManager from '@/pages/GameJudgeManager/model';
 import gameReffer from '@/pages/GameReffer/model';
 // 赛事题目-评分标准
 import refferManager from '@/pages/RefferManager/model';
+import refferAllot from '@/pages/RefferAllot/model';
 // 比赛发布
 import gameRelease from '@/pages/GameRelease/model';
 // 领队管理
@@ -34,6 +35,7 @@ const models = {
   ...gameJudgeManager,
   ...gameReffer,
   ...refferManager,
+  ...refferAllot,
   ...leaderManager
 };
 

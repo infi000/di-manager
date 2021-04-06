@@ -5,12 +5,17 @@ import { TableBtn, TableBtnGroup } from '@/components/TableContainer';
 import withStore from '@/store/withStore';
 import ListPage from '@/components/ListPage';
 import Path from '@/components/Path';
-import { Form, Input } from '@/components/AntPlus';
+import { Form, Input, Select } from '@/components/AntPlus';
 import { useTableScrollX, useTableRenderNull } from '@/utils/hooks';
 import { useHistory } from 'react-router-dom';
 import qs from 'qs';
 import { ADUIT_STATUS_MAP, NAME_SPACE } from '../constants';
 import { IProps, ITableItem } from '../type';
+
+const ADUIT_OPTION = Object.entries(ADUIT_STATUS_MAP).map((item) => {
+  const [id, label] = item;
+  return { id, label };
+});
 
 const { useState, useEffect } = React;
 
@@ -34,7 +39,15 @@ const DataTable = (props: IProps) => {
       label='比赛id'
       id='sid'
       msg='full'
-    /></>
+    />
+      <Select
+        label='状态'
+        id='status'
+        msg='full'
+        allowClear
+        data={ADUIT_OPTION}
+      />
+    </>
   );
   /**
    * 审核
@@ -140,7 +153,7 @@ const DataTable = (props: IProps) => {
 
   return (
     <>
-      <Path list={[{ name: '裁判管理' }]} />
+      <Path list={[{ name: '裁判管理' },{ name: '裁判审核' }]} />
       <ListPage
         total={tableListTotal}
         fields={fields()}

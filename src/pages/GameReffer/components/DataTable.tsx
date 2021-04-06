@@ -7,10 +7,10 @@ import ListPage from '@/components/ListPage';
 import Path from '@/components/Path';
 import { Form } from '@/components/AntPlus';
 import { useTableScrollX, useTableRenderNull } from '@/utils/hooks';
-import { NAME_SPACE, FTYPE_MAP } from '../constants';
-import { IProps, ITableItem, ICreateParams } from '../type';
 import { useHistory } from 'react-router-dom';
 import qs from 'qs';
+import { NAME_SPACE, FTYPE_MAP } from '../constants';
+import { IProps, ITableItem, ICreateParams } from '../type';
 
 const { useState, useEffect } = React;
 
@@ -34,8 +34,8 @@ const DataTable = (props: IProps) => {
     getTableList();
     return () => {
       props.updateQid('');
-    }
-  }, [])
+    };
+  }, []);
 
 
   /**
@@ -43,17 +43,17 @@ const DataTable = (props: IProps) => {
    */
   const handleBack = () => {
     history.goBack();
-  }
+  };
 
   /**
    * 刷新列表
    */
   const handleRefresh = () => {
     getTableList();
-  }
+  };
   /**
  * 新建
- * @param opt 
+ * @param opt
  */
   const handleCreate = () => {
     updateModalData({ show: true, type: 'create', data: {} });
@@ -61,11 +61,11 @@ const DataTable = (props: IProps) => {
 
   /**
    * 修改
-   * @param status 
+   * @param status
    */
   const handleEdit = (opt: ITableItem) => {
     updateModalData({ show: true, type: 'edit', data: opt });
-  }
+  };
 
   /**
    * 列表
@@ -88,7 +88,7 @@ const DataTable = (props: IProps) => {
         const { id } = record;
         return (
           <TableBtnGroup>
-            <TableBtn onClick={() => { handleEdit(record) }}>修改</TableBtn>
+            <TableBtn onClick={() => { handleEdit(record); }}>修改</TableBtn>
           </TableBtnGroup>
         );
       },
@@ -115,13 +115,17 @@ const DataTable = (props: IProps) => {
       dataIndex: 'child',
       render: (child) => {
         console.log(child);
-        return <> {child.map((item: any) => {
-          const { id, describe, maxscore } = item;
-          return <div>
-            id:{`${id}`}、最大分值:{`${maxscore}`}、标准内容{`${describe}`}
-          </div>
-        })}
-        </>
+        return (
+          <> {child.map((item: any) => {
+            const { id, describe, maxscore } = item;
+            return (
+              <div>
+                id:{`${id}`}、最大分值:{`${maxscore}`}、标准内容{`${describe}`}
+              </div>
+            );
+          })}
+          </>
+        );
       }
     },
   ], []);
@@ -141,14 +145,14 @@ const DataTable = (props: IProps) => {
     { otherBtnClick: handleCreate, otherBtnName: '新建' },
     { otherBtnClick: handleRefresh, otherBtnName: '刷新' },
     { otherBtnClick: handleBack, otherBtnName: '返回' },
-  ]
+  ];
 
   return (
     <>
       <Path list={pathList} />
       <ListPage
         total={tableListTotal}
-        hideFormSearch={true}
+        hideFormSearch
         hasOtherBtn={hasOtherBtn}
         form={form} // 表单必须
         params={serchParams} // 表单域数据
@@ -157,15 +161,16 @@ const DataTable = (props: IProps) => {
         rowKey='id' // table row 唯一标识，不是 `id` 时传入
         data={tableList} // 列表数据
         scroll={{ x: scrollX, y: 460 }}
-        expandedRow={(opt: ITableItem) =>
+        expandedRow={(opt: ITableItem) => (
           <Table
             bordered
             columns={columnsChild}
             dataSource={opt.jts}
             rowKey='id'
             pagination={false}
-          />}
-        defaultExpandAllRows={true}
+          />
+        )}
+        defaultExpandAllRows
         bordered
       />
     </>
