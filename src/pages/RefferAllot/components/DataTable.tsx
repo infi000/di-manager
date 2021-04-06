@@ -7,6 +7,7 @@ import ListPage from '@/components/ListPage';
 import Path from '@/components/Path';
 import { Form, Input, Select } from '@/components/AntPlus';
 import { useTableScrollX, useTableRenderNull } from '@/utils/hooks';
+import { uniqueArray } from '@/utils/utils';
 import { useHistory } from 'react-router-dom';
 import qs from 'qs';
 import { ADUIT_STATUS_MAP, NAME_SPACE } from '../constants';
@@ -85,7 +86,7 @@ const DataTable = (props: IProps) => {
         console.log(arr);
         if (arr.length > 0) {
           // return arr.map(item => <span>{item.realname || '-'}</span>);
-          return arr.map(item => item.uname).join(',');
+          return uniqueArray(arr.map(item => item.uname)).join(',');
         }
         return '暂无';
       },

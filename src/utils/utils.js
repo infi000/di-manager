@@ -131,3 +131,8 @@ export const formatMapToLabel = (obj) => {
 export const filter = (inputValue, path) => {
   return path.some(option => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
 };
+
+
+export function uniqueArray (arr) {
+  return Array.from(new Set(arr))
+}
