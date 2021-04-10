@@ -7,7 +7,7 @@ import ListPage from '@/components/ListPage';
 import Path from '@/components/Path';
 import { Form } from '@/components/AntPlus';
 import { useTableScrollX, useTableRenderNull } from '@/utils/hooks';
-import { NAME_SPACE, FTYPE_MAP } from '../constants';
+import { NAME_SPACE, FTYPE_MAP, IS_NEED } from '../constants';
 import { IProps, ITableItem, ICreateParams } from '../type';
 import { useHistory } from 'react-router-dom';
 import qs from 'qs';
@@ -86,13 +86,21 @@ const DataTable = (props: IProps) => {
       dataIndex: 'ftype',
       width: 180,
       render: (text: ICreateParams['ftype']) => {
-        return FTYPE_MAP[text]
+        return FTYPE_MAP[text];
       }
     },
     {
       title: '描述',
       dataIndex: 'describe',
       width: 180,
+    },
+    {
+      title: '是否必填',
+      dataIndex: 'isneed',
+      width: 180,
+      render: (text: ICreateParams['isneed']) => {
+        return text ? IS_NEED[text] : '-';
+      }
     },
     {
       title: '操作',

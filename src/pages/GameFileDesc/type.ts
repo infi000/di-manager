@@ -3,7 +3,7 @@ import { FormComponentProps } from 'antd/lib/form';
 
 export enum EFtype {
   'mp4' = '1', 
-  'pdf' = '2', 
+  'pdf/jpg' = '2', 
   'jpg' = '3', 
 }; 
 
@@ -13,9 +13,10 @@ export enum EFtype {
 export interface ICreateParams {
   qid:string;// 题目id
   title:string;// 标题
-  ftype: EFtype.pdf | EFtype.mp4 | EFtype.jpg;// 文件类型，1mp4,2pdf,3jpg
+  ftype: EFtype;// 文件类型，1mp4,2pdf,3jpg
   describe?:string;// 描述
   sort?:string;// 排序值
+  isneed?:'1' | '0';// 是否必填
 }
 /**
  * 添加描述 批量
