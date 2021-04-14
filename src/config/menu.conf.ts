@@ -54,12 +54,11 @@ const RefferAllot = load(() => import('@/pages/RefferAllot'));
 const LeaderManager = load(() => import('@/pages/LeaderManager'));
 const GameRelease = load(() => import('@/pages/GameRelease'));
 const SignUpManager = load(() => import('@/pages/SignUpManager'));
-
-
+const GradeExport = load(() => import('@/pages/GradeExport'));
+const GradeExportBlank = load(() => import('@/pages/GradeExport/index_blank'));
 
 
 // 单独页面 开发工具
-
 
 
 // 不会验证权限和调用基础信息接口的白班路由
@@ -68,86 +67,74 @@ export const blankRoutes = [
     path: '/login', // 登陆
     component: Login,
   },
+  {
+    path: '/gradeExport',
+    component: GradeExportBlank,
+    isMenu: true,
+    name: '成绩导出',
+  },
 ];
 
 
 export const menus: TMenuItem[] = [
   {
-    path: '/gameManager', 
+    path: '/gameManager',
     component: GameManager,
     isMenu: true,
-    name:'赛事管理',
+    name: '赛事管理',
   },
   {
-    path: '/gameTopicManager', 
+    path: '/gameTopicManager',
     component: GameTopicManager,
     isMenu: false,
-    name:'赛事题目管理',
+    name: '赛事题目管理',
   },
   {
-    path: '/gameFileDesc', 
+    path: '/gameFileDesc',
     component: GameFileDesc,
     isMenu: false,
-    name:'赛事题目-文件描述',
+    name: '赛事题目-文件描述',
   },
   {
-    path: '/gameJudgeManager', 
+    path: '/gameJudgeManager',
     component: GameJudgeManager,
     isMenu: false,
-    name:'赛事题目-评分标准',
+    name: '赛事题目-评分标准',
   },
   {
-    path: '/gameReffer', 
+    path: '/gameReffer',
     component: GameReffer,
     isMenu: false,
-    name:'赛事题目-裁判类型',
+    name: '赛事题目-裁判类型',
   },
   {
-    path: '/refferManager', 
+    path: '/refferManager',
     component: RefferManager,
     isMenu: true,
-    name:'裁判审核',
-  },{
-    path: '/refferAllot', 
+    name: '裁判审核',
+  }, {
+    path: '/refferAllot',
     component: RefferAllot,
     isMenu: true,
-    name:'裁判分配',
+    name: '裁判分配',
   },
-  // {
-  //   path: '/reffer', 
-  //   component: RefferManager,
-  //   isMenu: true,
-  //   name:'裁判管理',
-  //   children:[{
-  //     path: '/refferManager', 
-  //     component: RefferManager,
-  //     isMenu: true,
-  //     name:'裁判审核',
-  //   },{
-  //     path: '/refferAllot', 
-  //     component: RefferAllot,
-  //     isMenu: true,
-  //     name:'裁判分配',
-  //   }
-  // ]
-  // },
-  // {
-  //   path: '/gameRelease', 
-  //   component: GameRelease,
-  //   isMenu: true,
-  //   name:'比赛发布',
-  // },
   {
-    path: '/leaderManager', 
+    path: '/leaderManager',
     component: LeaderManager,
     isMenu: true,
-    name:'领队管理',
+    name: '领队管理',
   },
   {
-    path: '/signUpManager', 
+    path: '/signUpManager',
     component: SignUpManager,
     isMenu: true,
-    name:'报名管理'
+    name: '报名管理'
+  },
+  {
+    path: '/gradeExport',
+    component: GradeExport,
+    isMenu: true,
+    name: '成绩导出',
   },
 ];
 

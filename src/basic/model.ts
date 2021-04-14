@@ -15,7 +15,7 @@ const model = {
     isLoading: false,
     powerInfo: {}, // 没用
     merchantId: '', // 没用
-    userInfo: { ...DEFAULT_USERINFO }, //用户信息
+    userInfo: { ...DEFAULT_USERINFO }, // 用户信息
   },
   reducers: {
     setState(state: any, partialState: any) {
@@ -35,6 +35,9 @@ const model = {
         }
         if(params.mtype){
           localStorage.setItem('mtype', params.mtype);
+        }
+        if(Number(params.id) == 2){
+          window.location.href = '/di/gradeExport';
         }
       },
       async checkLogin() {

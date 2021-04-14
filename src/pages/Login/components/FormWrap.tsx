@@ -4,26 +4,24 @@ import { useHistory } from 'react-router-dom';
 import { Button, Form, Input, InputNumber, Select } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import styled from 'styled-components';
-import { NAME_SPACE } from '../constants';
 import withStore from '@/store/withStore';
-import { IState, TAction } from '../types';
 import FormButtonWrap from '@/components/FormButtonWrap';
+import { NAME_SPACE } from '../constants';
+import { IState, TAction } from '../types';
 
 
-interface IOutProps extends FormComponentProps {
-
-}
+type IOutProps = FormComponentProps
 interface IInProps extends IOutProps, TAction, IState, IBasicState {
-  history: any
+  history: any;
 }
 
 const Wrap = styled.div`
   padding:20px 10px;
-`
+`;
 
 const WrapInfo = styled.div`
   padding:20px;
-`
+`;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -44,40 +42,42 @@ const FormWrap = (props: IInProps) => {
         await postPostLogin(val);
         history.push('/gameManager');
       }
-    })
-  }
+    });
+  };
   const handleRegister = () => {
     history.push('register');
-  }
-  return <Wrap><Form {...formItemLayout} >
+  };
+  return (
+    <Wrap><Form {...formItemLayout}>
 
-    <Form.Item label="用户名">
-      {getFieldDecorator('mname', {
-        rules: [
-          {
-            required: true,
-            message: '输入用户名',
-          },
-        ],
-      })(<Input />)}
-    </Form.Item>
-    <Form.Item label="密码">
-      {getFieldDecorator('pass', {
-        rules: [
-          {
-            required: true,
-            message: '输入密码',
-          },
-        ],
-      })(<Input.Password />)}
-    </Form.Item>
-  </Form>
-    <FormButtonWrap>
-      {/* <Button onClick={handleRegister} shape="round">注册</Button> */}
-      <Button onClick={handleSubmit} type='danger' shape="round">登陆</Button>
-    </FormButtonWrap>
-  </Wrap>
-}
+      <Form.Item label='用户名'>
+        {getFieldDecorator('mname', {
+          rules: [
+            {
+              required: true,
+              message: '输入用户名',
+            },
+          ],
+        })(<Input />)}
+      </Form.Item>
+      <Form.Item label='密码'>
+        {getFieldDecorator('pass', {
+          rules: [
+            {
+              required: true,
+              message: '输入密码',
+            },
+          ],
+        })(<Input.Password />)}
+      </Form.Item>
+    </Form>
+      <FormButtonWrap>
+        {/* <Button onClick={handleRegister} shape="round">注册</Button> */}
+        <Button onClick={handleSubmit} type='danger' shape='round'>登陆</Button>
+      </FormButtonWrap>
+    </Wrap>
+  );
+};
 
 
 const injectStore: [] = withStore('basic', NAME_SPACE);

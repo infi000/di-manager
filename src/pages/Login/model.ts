@@ -23,10 +23,10 @@ export const model = {
         return getState()[NAME_SPACE];
       },
       postPostLogin(params: IPostParams) {
-        servicePostLogin(params).then((d: any) => {
+        return servicePostLogin(params).then((d: any) => {
           message.success('提交成功');
           basic.updateUserInfo(d);
-        })
+        });
       }
     };
   },

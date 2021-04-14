@@ -22,6 +22,8 @@ import gameRelease from '@/pages/GameRelease/model';
 import leaderManager from '@/pages/LeaderManager/model';
 // 报名列表
 import signUpManager from '@/pages/SignUpManager/model';
+// 成绩导出
+import GradeExport from '@/pages/GradeExport/model';
 
 
 const models = {
@@ -36,7 +38,8 @@ const models = {
   ...gameReffer,
   ...refferManager,
   ...refferAllot,
-  ...leaderManager
+  ...leaderManager,
+  ...GradeExport
 };
 
 export default createStore(models);
