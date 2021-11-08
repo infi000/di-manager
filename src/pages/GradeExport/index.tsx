@@ -13,7 +13,7 @@ const SignUpManager = (props: IProps) => {
   useEffect(() => props.resetState, []);
   return (
     <div>
-      <Path list={[{ name: '裁判管理' }]} />
+      <Path list={[{ name: '成绩导出' }]} />
       {modalData.show && <CreateEditModal />}
       <DataTable />
     </div>

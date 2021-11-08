@@ -31,3 +31,10 @@ export const servicePostSetCode = (params: ISetcode) => fetch('/index.php/AdminA
  * @returns 
  */
 export const serviceGetInvoiceDetail = (params: {tid: string}): Promise<IInvoiceDetail> => fetch('/index.php/AdminApi/Team/bill', { params });
+
+/**
+ * 获取比赛列表
+ * @param params
+ * @returns
+ */
+ export const serviceGetSdict = (params?: {sid: string}) => fetch('/index.php/AdminApi/Teamwork/sdict', { params, type: 'POST' });

@@ -17,7 +17,7 @@ declare type TSomeRequired<T, S extends keyof T> = Omit<T, S> &
  */
 declare type TModalData<T = Dictionary<any>> = {
   show: boolean;
-  type?: 'create' | 'edit' | 'view' ;
+  type?: 'create' | 'edit' | 'view';
   data: T;
 }
 declare interface IFetchParams {
@@ -67,19 +67,19 @@ declare interface IReducerStoreResult<S, A> {
 /**
  * 页面分页
  */
-declare type TPage = {page_no: number;page_size: number};
+declare type TPage = { page_no: number; page_size: number };
 
 /**
  * 借口分页
  */
-declare type TPageFetch = {count: number; offset: number};
+declare type TPageFetch = { count: number; offset: number };
 
 
-declare type TFetchMsg<T> = {res: 'succ' | 'err'; errdata: string; data: Dictionary<T>};
+declare type TFetchMsg<T> = { res: 'succ' | 'err'; errdata: string; data: Dictionary<T> };
 /**
  * 年龄组别
  */
- declare type TAgeType = 'RS' | 'EL' | 'ML' | 'SL' | 'UL' | 'FF低龄' | 'FF高龄';
+declare type TAgeType = 'RS' | 'EL' | 'ML' | 'SL' | 'UL' | 'FF低龄' | 'FF高龄';
 
 
 enum EMtype {
@@ -98,6 +98,7 @@ enum EStatus {
  */
 declare interface IUserInfo {
   id?: string;
+  aid?:string;
   uid?: string;
   mname: string;
   phone: number;
@@ -110,4 +111,5 @@ declare interface IUserInfo {
 declare interface IBasicState {
   userInfo: IUserInfo;
   history: any;
+  areas: { id: string; aname: string; city: string; describe: string; status: string }[]
 }

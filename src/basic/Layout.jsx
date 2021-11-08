@@ -29,7 +29,9 @@ class Layout extends Component {
   }
 
   componentDidMount() {
-    const { checkLogin, initDesensit } = this.props;
+    const { checkLogin, getAreas, initDesensit } = this.props;
+    checkLogin();
+    getAreas();
     this.getInfoList();
   }
 

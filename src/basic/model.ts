@@ -1,4 +1,4 @@
-import { serviceGetUserInfo } from './services';
+import { serviceGetUserInfo, serviceGetAreas } from './services';
 
 const DEFAULT_USERINFO: Partial<IUserInfo> = {
   mname: undefined,
@@ -16,6 +16,7 @@ const model = {
     powerInfo: {}, // 没用
     merchantId: '', // 没用
     userInfo: { ...DEFAULT_USERINFO }, // 用户信息
+    areas: [],
   },
   reducers: {
     setState(state: any, partialState: any) {
@@ -28,25 +29,35 @@ const model = {
       state() {
         return getState().basic;
       },
-      updateUserInfo(params: IUserInfo & {token?:string}) {
-        basic.setState({ userInfo: {...params} });
-        if(params.token){
+      updateUserInfo(params: IUserInfo & { token?: string }) {
+        basic.setState({ userInfo: { ...params } });
+        if (params.token) {
           localStorage.setItem('token', params.token);
         }
-        if(params.mtype){
+        if (params.mtype) {
           localStorage.setItem('mtype', params.mtype);
         }
-        if(Number(params.id) == 2){
+        if (Number(params.id) == 2) {
           window.location.href = '/di/gradeExport';
+        }
+      },
+      updateaAreas(params: any) {
+        basic.setState({ areas: params });
+      },
+      async getAreas(){
+        const data = await serviceGetAreas();
+        if (Array.isArray(data.areas)) {
+          basic.updateaAreas(data.areas);
         }
       },
       async checkLogin() {
         basic.setState({ isLoading: true });
         try {
-          const d: IUserInfo= await serviceGetUserInfo();
+          const d: IUserInfo = await serviceGetUserInfo();
           if (d) {
             basic.updateUserInfo({ ...d });
           }
+ 
           basic.setState({ isLoading: false });
         } catch (e) {
           basic.setState({ isLoading: false });

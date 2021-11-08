@@ -71,3 +71,8 @@ export const ALIPAYINFO_URL = '/alipayinfo.png';
 
 
 export const BG_COLOR = '#fef3e8';
+
+
+export const HOST_SASS = 'http://game.gete-di.com:8080';
+
+export const HOST_H5 = 'http://game.gete-di.com';

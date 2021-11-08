@@ -49,6 +49,36 @@ export type TDictA = {
 }
 
 /**
+ * 描述
+ */
+export type TNeedFiles = {
+  'qfid': string; // "2",
+  'title': string; // "标题2",
+  'describe': string; // "描述2",
+  'id': string; // "5",
+  'fpath': string; // "http://localhost/match/Uploads/Works/2021-03-14/604e109928086.jpg",
+  'fext': string; // "jpg"
+}
+
+/**
+ * 作品详情内容
+ */
+export type TWork = {
+  'id': string; //  "7",
+  'judgetype': string; //  "0",
+  'qid': string; //  "1",
+  'title': string; //  "挑战A 技术类 下一关",
+  'content': string; //  "题目简述",
+  'age': string; //  "EL",
+  'tname': string; //  "测试队伍1",
+  'tid': string; //  "1",
+  'school': string; //  "1",
+  'tcode': string; //  "1",
+  needfiles: TNeedFiles[];
+}
+
+
+/**
  * 详情成员项的子成员项
  */
 export type TWjudeItem = {

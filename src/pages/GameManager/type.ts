@@ -18,6 +18,8 @@ export interface ICreateParams {
   evaluationendtime: string;//评比结束时间(yyyy-MM-dd)
   resulttime: string;//成绩公布时间(yyyy-MM-dd)
   money: string;//报名费用，单位元，两位小数
+  aid: string;//地区id
+  thumbinal: string;//海报地址
   model?: string;// 比赛公告模板（样式）
 }
 

@@ -5,11 +5,12 @@ import { TableBtn, TableBtnGroup } from '@/components/TableContainer';
 import withStore from '@/store/withStore';
 import ListPage from '@/components/ListPage';
 import Path from '@/components/Path';
-import { Form } from '@/components/AntPlus';
+import { Form, Input, Select } from '@/components/AntPlus';
 import { useTableScrollX, useTableRenderNull } from '@/utils/hooks';
+import { useHistory } from 'react-router-dom';
+import { HOST_H5 } from '@/constants';
 import { NAME_SPACE } from '../constants';
 import { IProps, ITableItem } from '../type';
-import { useHistory } from 'react-router-dom';
 
 const { useState, useEffect } = React;
 
@@ -22,39 +23,51 @@ const DataTable = (props: IProps) => {
     postClose,
     postOpen,
     updateModalData,
-    serchParams
+    serchParams,
+    areas
   } = props;
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const history = useHistory();
   useEffect(() => {
     getTableList();
   }, []);
-
+  const fields = () => (
+    <>
+      <Select
+        label='地址id'
+        id='aid'
+        msg='full'
+        allowClear
+        keys={['id', 'aname']}
+        data={areas}
+      />
+    </>
+  );
   /**
    * 刷新列表
    */
   const handleRefresh = () => {
     getTableList();
-  }
+  };
   /**
    * 开启
-   * @param status 
+   * @param status
    */
   const handleOpen = (id: string) => {
     postOpen(id);
-  }
+  };
 
   /**
    * 关闭
-   * @param status 
+   * @param status
    */
   const handleClose = (id: string) => {
     postClose(id);
-  }
+  };
 
   /**
    * 新建
-   * @param opt 
+   * @param opt
    */
 
   const handleCreate = () => {
@@ -63,18 +76,24 @@ const DataTable = (props: IProps) => {
 
   /**
    * 修改
-   * @param status 
+   * @param status
    */
   const handleEdit = (opt: ITableItem) => {
     updateModalData({ show: true, type: 'edit', data: opt });
-  }
+  };
 
   /**
    * 跳转比赛编辑
    */
-  const handleManagerQuestion = (sid: string, title?: string) =>{
+  const handleManagerQuestion = (sid: string, title?: string) => {
     history.push(`gameTopicManager?sid=${sid}&title=${title}`);
-  }
+  };
+
+  const handleOpenBg = (record: ITableItem) => {
+    const params = encodeURIComponent(`sid=${record.id}&aid=${record.aid}&bg=${record.thumbinal}`);
+    window.open(`${HOST_H5}/ad?${params}`, '_blank');
+  };
+
   /**
    * 列表
    */
@@ -93,7 +112,7 @@ const DataTable = (props: IProps) => {
       title: '比赛状态',
       dataIndex: 'status',
       width: 180,
-      render:(txt)=>{return txt == '1'?'开启' :' 关闭'}
+      render: txt => txt == '1' ? '开启' : ' 关闭'
     },
     {
       title: '比赛描述',
@@ -165,18 +184,29 @@ const DataTable = (props: IProps) => {
       width: 180,
     },
     {
+      title: '方案提交入口',
+      dataIndex: 'thumbinal',
+      width: 180,
+      render: (_, record) => {
+        const params = encodeURIComponent(`sid=${record.id}&aid=${record.aid}&bg=${record.thumbinal}`);
+        const url = `${HOST_H5}/leaderLogin?${params}`;
+        return <a href={url} target='_blank' rel='noreferrer'>{url}</a>;
+      }
+    },
+    {
       title: '操作',
       dataIndex: 'action',
       width: 200,
       fixed: 'right',
       render: (_: string, record: ITableItem) => {
-        const { id, status,title } = record;
+        const { id, status, title } = record;
         return (
           <TableBtnGroup>
-            <TableBtn onClick={() => { handleEdit(record) }}>修改</TableBtn>
-            <TableBtn power={status && status == '1' ? 0 : 1} onClick={() => { handleOpen(id) }}>开启赛事</TableBtn>
-            <TableBtn power={status && status == '1' ? 1 : 0} onClick={() => { handleClose(id) }}>关闭赛事</TableBtn>
-            <TableBtn onClick={() => { handleManagerQuestion(id,title) }}>编辑题目</TableBtn>
+            <TableBtn onClick={() => { handleEdit(record); }}>修改</TableBtn>
+            <TableBtn power={status && status == '1' ? 0 : 1} onClick={() => { handleOpen(id); }}>开启赛事</TableBtn>
+            <TableBtn power={status && status == '1' ? 1 : 0} onClick={() => { handleClose(id); }}>关闭赛事</TableBtn>
+            <TableBtn onClick={() => { handleManagerQuestion(id, title); }}>编辑题目</TableBtn>
+            <TableBtn onClick={() => { handleOpenBg(record); }}>海报地址</TableBtn>
           </TableBtnGroup>
         );
       },
@@ -193,13 +223,14 @@ const DataTable = (props: IProps) => {
     onChange: onTableSelectChange,
   };
 
-  const hasOtherBtn =[{ otherBtnClick: handleCreate, otherBtnName: '新建' }, { otherBtnClick: handleRefresh, otherBtnName: '刷新' }];
+  const hasOtherBtn = [{ otherBtnClick: handleCreate, otherBtnName: '新建' }, { otherBtnClick: handleRefresh, otherBtnName: '刷新' }];
   return (
     <>
       <Path list={[{ name: '赛事管理' }]} />
       <ListPage
         total={tableListTotal}
         hasOtherBtn={hasOtherBtn}
+        fields={fields()}
         form={form} // 表单必须
         params={serchParams} // 表单域数据
         onSearch={getTableList} // 查询
@@ -207,7 +238,6 @@ const DataTable = (props: IProps) => {
         columns={columns} // Table 组件 `columns`
         rowKey='id' // table row 唯一标识，不是 `id` 时传入
         // rowSelection={rowSelection}
-        hideFormSearch={true}
         data={tableList} // 列表数据
         scroll={{ x: scrollX, y: 460 }}
       />

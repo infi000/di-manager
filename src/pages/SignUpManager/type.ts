@@ -4,6 +4,13 @@ import { model } from './model';
 
 
 /**
+ * 比赛id类型成员
+ */
+ export type TSdict = {
+  id: string; // 比赛id
+  title: string;
+}
+/**
  * 查询项
  */
 export interface ISearch {

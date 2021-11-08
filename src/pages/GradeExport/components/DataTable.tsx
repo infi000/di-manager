@@ -13,18 +13,20 @@ import { servicePostExportO, servicePostExportU } from '../services';
 
 const { useState, useEffect } = React;
 
-const DataTable = (props: IProps) => {
+const DataTable = (props: IProps & { isReferee: boolean }) => {
   const {
     tableList,
     form,
     tableListTotal,
     getTableList,
     updateModalData,
+    updateModalFile,
     tablePage,
     serchParams,
     sdictMap,
     dictQMap,
     dictAMap,
+    isReferee,
     getDic,
     getSdic
   } = props;
@@ -55,6 +57,18 @@ const DataTable = (props: IProps) => {
    */
   const handleDetail = (opt: ITableItem) => {
     updateModalData({ show: true, data: opt });
+  };
+
+  /**
+   * 作品
+   * @param status
+   */
+  const handleFile = (opt: ITableItem) => {
+    updateModalFile({ show: true, data: opt });
+  };
+
+  const handleLogout = () => {
+    window.open('/di/login');
   };
 
   const handleChangeSid = (sid: any) => {
@@ -117,19 +131,21 @@ const DataTable = (props: IProps) => {
       dataIndex: 'oscore',
       width: 180,
     },
-    {
-      title: '比例分数',
-      dataIndex: 'rankscore',
-      width: 180,
-    },
+    // {
+    //   title: '比例分数',
+    //   dataIndex: 'rankscore',
+    //   width: 180,
+    // },
     {
       title: '操作',
       dataIndex: 'action',
-      width: 330,
+      width: 180,
       fixed: 'right',
       render: (_: string, record: ITableItem) => (
         <TableBtnGroup>
-          <TableBtn onClick={() => { handleDetail(record); }}>查看</TableBtn>
+          { isReferee && <TableBtn onClick={() => { handleFile(record); }}>查看作品</TableBtn>}
+          { isReferee && <TableBtn onClick={() => { handleDetail(record); }}>查看分数</TableBtn>}
+          { !isReferee && <TableBtn onClick={() => { handleDetail(record); }}>查看</TableBtn>}
         </TableBtnGroup>
       ),
     },
@@ -144,10 +160,15 @@ const DataTable = (props: IProps) => {
     getSdic();
   }, []);
 
-  const hasOtherBtn = [
-    { otherBtnClick: handleExportOScore, otherBtnName: '导出原始分' },
-    { otherBtnClick: handleExportRank, otherBtnName: '导出比例分' },
-  ];
+
+  const hasOtherBtn = () => {
+    const OtherBtn = [
+      { otherBtnClick: handleExportOScore, otherBtnName: '导出原始分', power: isReferee ? 0 : 1 },
+      { otherBtnClick: handleExportRank, otherBtnName: '导出比例分', power: isReferee ? 0 : 1 },
+      { otherBtnClick: handleLogout, otherBtnName: '退出', power: isReferee ? 1 : 0 },
+    ];
+    return OtherBtn.filter(item => item.power);
+  };
 
   return (
     <>
@@ -164,11 +185,11 @@ const DataTable = (props: IProps) => {
         // rowSelection={rowSelection}
         data={tableList} // 列表数据
         scroll={{ x: scrollX, y: 460 }}
-        hasOtherBtn={hasOtherBtn}
+        hasOtherBtn={hasOtherBtn()}
       />
     </>
   );
 };
 const injectStore: [] = withStore('basic', NAME_SPACE);
 
-export default connect(...injectStore)(Form.create()(DataTable));
+export default (connect(...injectStore)(Form.create()(DataTable)) as any);

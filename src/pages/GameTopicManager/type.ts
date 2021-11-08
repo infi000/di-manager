@@ -16,6 +16,7 @@ export interface ICreateParams {
   sid: string;// 所属赛程id
   sort?: string; // 排序值
   age?: TAgeType; //
+  aid?: string; // 地区
   qtype?: '1' | '2';// 1:TC 2:IC
 }
 

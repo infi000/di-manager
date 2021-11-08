@@ -7,6 +7,7 @@ const state: {
   tableList: ITableItem[];
   serchParams: ISearch;
   modalData: TModalData<ITableItem | {}>;
+  modalFile: TModalData<ITableItem | {}>;
   tablePage: TPage;
   tableListTotal: number;
   sdictMap: TSdict[];
@@ -18,6 +19,7 @@ const state: {
   tablePage: { page_no: 1, page_size: 10000 },
   serchParams: {},
   modalData: { show: false, data: {} },
+  modalFile: { show: false, data: {} },
   sdictMap: [],
   dictQMap: [],
   dictAMap: []
@@ -45,7 +47,9 @@ export const model = {
       updateModalData(params: IState['modalData']) {
         params && store.setState({ modalData: { ...params } });
       },
-
+      updateModalFile(params: IState['modalData']) {
+        params && store.setState({ modalFile: { ...params } });
+      },
       updateTableList(params: IState['tableList']) {
         params && store.setState({ tableList: [...params] });
       },

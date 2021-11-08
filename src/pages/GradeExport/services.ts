@@ -36,25 +36,31 @@ export const serviceGetDetail = (params: {tid: string}) => fetch('/index.php/Adm
  * @param params
  * @returns
  */
-export const servicePostExportTeam = (params: {sid: string;qid?:string;tid?:string}) => fetch('/index.php/AdminApi/Teamwork/detail', { params, type: 'POST' });
+export const servicePostExportTeam = (params: {sid: string;qid?: string;tid?: string}) => fetch('/index.php/AdminApi/Teamwork/detail', { params, type: 'POST' });
 
 /**
  * 导出用户User/export
  * @param params
  * @returns
  */
-export const servicePostExportUser = (params: {sid: string;qid?:string;tid?:string}) => fetch('/index.php/AdminApi/Teamwork/detail', { params, type: 'POST' });
+export const servicePostExportUser = (params: {sid: string;qid?: string;tid?: string}) => fetch('/index.php/AdminApi/Teamwork/detail', { params, type: 'POST' });
 
 /**
  * 导出作品分数（原始分）Works/oexport
  * @param params
  * @returns
  */
-export const servicePostExportO = (params: {sid: string}) => fetch('/index.php/AdminApi/Works/oexport', { params, type: 'POST' });
+export const servicePostExportO = (params: {sid: string}) => window.open(`/index.php/AdminApi/Works/oexport?sid=${params.sid}`, '_blank');
 
 /**
  * 导出比例分
  * @param params
  * @returns
  */
-export const servicePostExportU = (params: {sid: string}) => fetch('/index.php/AdminApi/Works/uexport', { params, type: 'POST' });
+export const servicePostExportU = (params: {sid: string}) => window.open(`/index.php/AdminApi/Works/uexport?sid=${params.sid}`, '_blank');
+/**
+ * 获取作品
+ * @param params
+ * @returns
+ */
+export const serviceGetFile = (params: {wid: string}) => fetch('/index.php/AdminApi/Works/work', { params });

@@ -106,7 +106,7 @@ const DataTable = (props: IProps) => {
 
   return (
     <>
-      <Path list={[{ name: '裁判管理' }, { name: '裁判分配' }]} />
+      <Path list={[{ name: '裁判分配' }]} />
       <ListPage
         total={tableListTotal}
         fields={fields()}

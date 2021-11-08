@@ -5,7 +5,7 @@ import { TableBtn, TableBtnGroup } from '@/components/TableContainer';
 import withStore from '@/store/withStore';
 import ListPage from '@/components/ListPage';
 import Path from '@/components/Path';
-import { Form, Input } from '@/components/AntPlus';
+import { Form, Input, Select } from '@/components/AntPlus';
 import { useTableScrollX, useTableRenderNull } from '@/utils/hooks';
 import { useHistory } from 'react-router-dom';
 import { EPayType, EIsPay } from '@/constants';
@@ -20,10 +20,12 @@ const DataTable = (props: IProps) => {
     form,
     tableListTotal,
     getTableList,
+    sdictMap,
     updateModalData,
     updateModalDataType,
     getChangePage,
     getInvoiceDetail,
+    getSdic,
     tablePage,
     serchParams
   } = props;
@@ -51,10 +53,13 @@ const DataTable = (props: IProps) => {
   };
 
   const fields = () => (
-    <> <Input
+    <> <Select
       label='比赛id'
       id='sid'
       msg='full'
+      keys={['id', 'title']}
+      allowClear
+      data={sdictMap}
     />
       <Input
         label='队伍名称'
@@ -152,12 +157,15 @@ const DataTable = (props: IProps) => {
     selectedRowKeys,
     onChange: onTableSelectChange,
   };
+  useEffect(() => {
+    getSdic();
+  }, []);
 
   const hasOtherBtn = [
   ];
   return (
     <>
-      <Path list={[{ name: '裁判管理' }]} />
+      <Path list={[{ name: '报名管理' }]} />
       <ListPage
         total={tableListTotal}
         fields={fields()}

@@ -17,6 +17,7 @@ export interface ITableItem {
   'email': string; // "qooo@126.com",
   'age': string; // "45",
   'ctime': string; // "2021-03-13 00:01:34",
+  'tid': string; // 组委
   'status': '1' | '4'; // "1"
 }
 

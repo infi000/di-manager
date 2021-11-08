@@ -3,7 +3,7 @@ import { ICreateParams, ITableItem } from './type';;
 import { DATE_FORMAT } from './constants';
 
 export const formatCreateParams = (val: ICreateParams) => {
-  const { starttime, endtime, regstarttime, regendtime, commitendtime, commitstarttime, evaluationendtime, evaluationstarttime, resulttime, ...rest } = { ...val };
+  const { starttime, endtime, regstarttime, regendtime, commitendtime, commitstarttime, evaluationendtime, evaluationstarttime, resulttime, thumbinal,...rest } = { ...val };
   return {
     ...rest,
     starttime: starttime ? moment(starttime).format(DATE_FORMAT) : '',
@@ -15,12 +15,13 @@ export const formatCreateParams = (val: ICreateParams) => {
     evaluationendtime: evaluationendtime ? moment(evaluationendtime).format(DATE_FORMAT) : '',
     evaluationstarttime: evaluationstarttime ? moment(evaluationstarttime).format(DATE_FORMAT) : '',
     resulttime: resulttime ? moment(resulttime).format(DATE_FORMAT) : '',
+    thumbinal: Array.isArray(thumbinal)? thumbinal.join(','):'',
   }
 };
 
 
 export const formatItem = (val: ITableItem | {}) => {
-  const { starttime, endtime, regstarttime, regendtime, commitendtime, commitstarttime, evaluationendtime, evaluationstarttime, resulttime, ...rest } = { ...val };
+  const { starttime, endtime, regstarttime, regendtime, commitendtime, commitstarttime, evaluationendtime, evaluationstarttime, resulttime, thumbinal,...rest } = { ...val };
   return {
     ...rest,
     starttime: starttime ? moment(starttime, DATE_FORMAT): '',
@@ -32,6 +33,7 @@ export const formatItem = (val: ITableItem | {}) => {
     evaluationendtime: evaluationendtime ? moment(evaluationendtime, DATE_FORMAT) : '',
     evaluationstarttime: evaluationstarttime ? moment(evaluationstarttime, DATE_FORMAT) : '',
     resulttime: resulttime ? moment(resulttime, DATE_FORMAT) : '',
+    thumbinal: thumbinal?[thumbinal]:[]
   }
 };
 

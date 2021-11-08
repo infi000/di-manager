@@ -22,7 +22,7 @@ const formItemLayout = {
 const QTYPE_MAP = { 1: 'TC', 2: 'IC' };
 
 const CreateEditModal = (props: IProps) => {
-  const { modalData, postCreate, postModify } = props;
+  const { modalData, postCreate, postModify, areas } = props;
   const { validateFields, getFieldDecorator } = props.form;
 
   const memoModalData = useMemo(() => {
@@ -76,6 +76,18 @@ const CreateEditModal = (props: IProps) => {
                   initialValue: memoModalData.title || '',
                   // rules: [{ required: true, message:'必填项' },],
                 })(<Input />)}
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item label='地区id'>
+                {getFieldDecorator('aid', {
+                  initialValue: memoModalData.aid || '',
+                  rules: [{ required: true, message: '必填项' }],
+                })(<Select allowClear>
+                  {
+                    Array.isArray(areas) && areas.map((item, index) => <Select.Option key={item.id} value={item.id}>{item.aname}</Select.Option>)
+                  }
+                </Select>)}
               </Form.Item>
             </Col>
             <Col span={24}>

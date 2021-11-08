@@ -35,11 +35,12 @@ const DataTable = (props: IProps) => {
   const history = useHistory();
 
   const fields = () => (
-    <> <Input
+    <> 
+    {/* <Input
       label='比赛id'
       id='sid'
       msg='full'
-    />
+    /> */}
       <Select
         label='状态'
         id='status'
@@ -101,8 +102,8 @@ const DataTable = (props: IProps) => {
       width: 180,
     },
     {
-      title: '省',
-      dataIndex: 'province',
+      title: '组委',
+      dataIndex: 'tid',
       width: 180,
     },
     {
@@ -153,7 +154,7 @@ const DataTable = (props: IProps) => {
 
   return (
     <>
-      <Path list={[{ name: '裁判管理' },{ name: '裁判审核' }]} />
+      <Path list={[{ name: '裁判审核' }]} />
       <ListPage
         total={tableListTotal}
         fields={fields()}

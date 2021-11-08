@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
 import withStore from '@/store/withStore';
-import { Button, Col, DatePicker, Form, Input, InputNumber, Modal, Row } from 'antd';
+import { Button, Col, DatePicker, Form, Input, InputNumber, Modal, Row, Select } from 'antd';
 import { connect } from 'react-redux';
 import { NAME_SPACE, DATE_FORMAT } from '../constants';
 import { formatCreateParams, formatItem } from '../adapter';
 import { IProps, ITableItem } from '../type';
+import Uploader from '@/components/Uploader/uploader';
 
 const formItemLayout = {
   labelCol: {
@@ -19,12 +20,12 @@ const formItemLayout = {
 
 
 const CreateEditModal = (props: IProps) => {
-  const { modalData, postCreate, postModify } = props;
+  const { modalData, postCreate, postModify, areas } = props;
   const { validateFields, getFieldDecorator } = props.form;
 
   const memoModalData = useMemo(() => {
     const { data } = modalData;
-    return (formatItem(data) as ITableItem);
+    return (formatItem(data) as any) ;
   }, [modalData]);
 
   /**
@@ -71,6 +72,23 @@ const CreateEditModal = (props: IProps) => {
                   initialValue: memoModalData.title || '',
                   rules: [{ required: true, message: '必填项' }],
                 })(<Input />)}
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              {/* <Form.Item label='地址id'>
+                {getFieldDecorator('aid', {
+           
+                })(<Input />)}
+              </Form.Item> */}
+              <Form.Item label='地区id'>
+                {getFieldDecorator('aid', {
+                       initialValue: memoModalData.aid || '',
+                       rules: [{ required: true, message: '必填项' }],
+                })(<Select allowClear>
+                  {
+                    Array.isArray(areas) && areas.map((item, index) => <Select.Option key={item.id} value={item.id}>{item.aname}</Select.Option>)
+                  }
+                </Select>)}
               </Form.Item>
             </Col>
             <Col span={24}>
@@ -174,20 +192,20 @@ const CreateEditModal = (props: IProps) => {
                 })(<DatePicker format={DATE_FORMAT} />)}
               </Form.Item>
             </Col>
-            {/* <Col span={24}>
-              <Form.Item label='报名费用'>
-                {getFieldDecorator('money', {
-                  initialValue: memoModalData.money || '',
-                  rules: [{ required: true, message: '必填项' }],
-                })(<InputNumber />)}
-              </Form.Item>
-            </Col> */}
             <Col span={24}>
               <Form.Item label='比赛公告模板'>
                 {getFieldDecorator('model', {
                   initialValue: memoModalData.model || '',
                   // rules: [{ required: true, message:'必填项' },],
                 })(<Input />)}
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item label='海报地址'>
+                {getFieldDecorator('thumbinal', {
+                  initialValue: memoModalData.thumbinal,
+                  rules: [{ required: true, message: '必填项' }],
+                })(<Uploader />)}
               </Form.Item>
             </Col>
           </Row>

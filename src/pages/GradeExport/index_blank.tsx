@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { NAME_SPACE } from './constants';
 import { IState, TAction } from './type';
 import CreateEditModal from './components/CreateEditModal';
+import FileModal from './components/FileModal';
 import DataTable from './components/DataTable';
 
 const Wrap = styled.div`
@@ -13,12 +14,13 @@ const Wrap = styled.div`
 
 interface IProps extends IState, TAction { }
 const SignUpManager = (props: IProps) => {
-  const { modalData } = props;
+  const { modalData, modalFile } = props;
   useEffect(() => props.resetState, []);
   return (
     <Wrap>
       {modalData.show && <CreateEditModal />}
-      <DataTable />
+      {modalFile.show && <FileModal />}
+      <DataTable isReferee />
     </Wrap>
   );
 };

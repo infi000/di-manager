@@ -1,6 +1,6 @@
-import { serviceGetTableList, servicePostPayType, servicePostSetCode, serviceGetInvoiceDetail } from './services';
+import { serviceGetTableList, servicePostPayType, servicePostSetCode, serviceGetInvoiceDetail, serviceGetSdict } from './services';
 import { NAME_SPACE } from './constants';
-import { ISearch, IState, ITableItem, IVerifypay, ISetcode } from './type';
+import { ISearch, IState, ITableItem, IVerifypay, ISetcode, TSdict } from './type';
 import { message } from 'antd';
 
 const state: {
@@ -11,6 +11,7 @@ const state: {
   modalDataInvoice: TModalData<Dictionary<any>>;
   tablePage: TPage;
   tableListTotal: number;
+  sdictMap: TSdict[];
 } = {
   tableList: [],
   tableListTotal: 0,
@@ -19,6 +20,7 @@ const state: {
   modalData: { show: false, data: {} },
   modalDataPayTYpe: { show: false, data: '' },
   modalDataInvoice: { show: false, data: {} },
+  sdictMap: [],
 };
 
 export const model = {
@@ -58,6 +60,9 @@ export const model = {
       updateTablePage(params: number) {
         store.setState({ tablePage: { page_no: params, page_size: 20 } });
       },
+      updateSdictMap(params: IState['sdictMap']) {
+        params && store.setState({ sdictMap: [...params] });
+      },
       getTableList(params?: ISearch) {
         params && store.updataSerchParams(params);
         const _params = params || store.state().serchParams;
@@ -90,7 +95,13 @@ export const model = {
       getChangePage(page: number) {
         store.updateTablePage(page);
         store.getTableList();
-      }
+      },
+      getSdic(params?: { sid: string}) {
+        serviceGetSdict(params).then((d: { sdata: any; }) => {
+          const { sdata } = d;
+          store.updateSdictMap(sdata);
+        });
+      },
     };
   },
 };
