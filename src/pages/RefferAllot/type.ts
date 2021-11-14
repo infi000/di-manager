@@ -2,6 +2,13 @@ import { FormComponentProps } from 'antd/lib/form';
 import { model } from './model';
 
 /**
+ * 比赛id类型成员
+ */
+ export type TSdict = {
+  id: string; // 比赛id
+  title: string;
+}
+/**
  * 裁判
  */
 export type TJudges = {

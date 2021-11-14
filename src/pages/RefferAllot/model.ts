@@ -1,8 +1,8 @@
 import { message } from 'antd';
 import qs from 'qs';
-import { serviceGetTableList, servicePostSetJudge } from './services';
+import { serviceGetTableList, servicePostSetJudge, serviceGetSdict } from './services';
 import { NAME_SPACE } from './constants';
-import { IState, ITableItem } from './type';
+import { IState, ITableItem, TSdict } from './type';
 
 const PAGE_SIZE = 1000;
 const state: {
@@ -14,12 +14,14 @@ const state: {
   };
   tablePage: TPage;
   tableListTotal: number;
+  sdictMap: TSdict[];
 } = {
   tableList: [],
   tableListTotal: 0,
   tablePage: { page_no: 1, page_size: PAGE_SIZE },
   serchParams: {},
   modalData: { show: false, data: { qid: '', jtid: '' } },
+  sdictMap: [],
 };
 
 export const model = {
@@ -52,6 +54,9 @@ export const model = {
       },
       updateTablePage(params: number) {
         store.setState({ tablePage: { page_no: params, page_size: PAGE_SIZE } });
+      },
+      updateSdictMap(params: IState['sdictMap']) {
+        params && store.setState({ sdictMap: [...params] });
       },
       /**
        * 获取列表
@@ -95,7 +100,13 @@ export const model = {
       getChangePage(page: number) {
         store.updateTablePage(page);
         store.getTableList({ show: false, data: { uids: '' }, type: 'batchAdd' },);
-      }
+      },
+      getSdic(params?: { sid: string}) {
+        serviceGetSdict(params).then((d: { sdata: any; }) => {
+          const { sdata } = d;
+          store.updateSdictMap(sdata);
+        });
+      },
     };
   },
 };

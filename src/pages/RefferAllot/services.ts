@@ -20,3 +20,11 @@ export const servicePostSetJudge = (params: {qid: string; uids: string; jtid: st
  * @returns
  */
  export const serviceGetRefferList = (params: { sid?: string } & TPageFetch): Promise<{users: IRefferItem[]; total: number}> => fetch('/index.php/AdminApi/User/search', { params });
+
+
+/**
+ * 获取比赛列表
+ * @param params
+ * @returns
+ */
+ export const serviceGetSdict = (params?: {sid: string}) => fetch('/index.php/AdminApi/Teamwork/sdict', { params, type: 'POST' });

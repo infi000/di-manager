@@ -27,7 +27,9 @@ const DataTable = (props: IProps) => {
     tableListTotal,
     getTableList,
     updateModalData,
-    serchParams
+    serchParams,
+    sdictMap,
+    getSdic
   } = props;
   const history = useHistory();
 
@@ -37,11 +39,14 @@ const DataTable = (props: IProps) => {
   };
 
   const fields = () => (
-    <> <Input
-      label='比赛id'
-      id='sid'
-      msg='full'
-    />
+    <> <Select
+    label='比赛id'
+    id='sid'
+    msg='full'
+    keys={['id', 'title']}
+    allowClear
+    data={sdictMap}
+  />
     </>
   );
   /**
@@ -102,6 +107,9 @@ const DataTable = (props: IProps) => {
       ),
     },
   ], []);
+  useEffect(() => {
+    getSdic();
+  }, []);
 
 
   return (

@@ -83,8 +83,8 @@ declare type TAgeType = 'RS' | 'EL' | 'ML' | 'SL' | 'UL' | 'FF低龄' | 'FF高�
 
 
 enum EMtype {
-  '超级管理员' = '1',
-  '普通管理员' = '2',
+  '中国区' = '1',
+  '组委' = '2',
 }
 
 enum EStatus {

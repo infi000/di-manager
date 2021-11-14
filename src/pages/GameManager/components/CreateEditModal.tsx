@@ -2,10 +2,10 @@ import React, { useMemo } from 'react';
 import withStore from '@/store/withStore';
 import { Button, Col, DatePicker, Form, Input, InputNumber, Modal, Row, Select } from 'antd';
 import { connect } from 'react-redux';
+import Uploader from '@/components/Uploader/uploader';
 import { NAME_SPACE, DATE_FORMAT } from '../constants';
 import { formatCreateParams, formatItem } from '../adapter';
 import { IProps, ITableItem } from '../type';
-import Uploader from '@/components/Uploader/uploader';
 
 const formItemLayout = {
   labelCol: {
@@ -20,12 +20,12 @@ const formItemLayout = {
 
 
 const CreateEditModal = (props: IProps) => {
-  const { modalData, postCreate, postModify, areas } = props;
+  const { modalData, postCreate, postModify, areas, userInfo } = props;
   const { validateFields, getFieldDecorator } = props.form;
 
   const memoModalData = useMemo(() => {
     const { data } = modalData;
-    return (formatItem(data) as any) ;
+    return (formatItem(data) as any);
   }, [modalData]);
 
   /**
@@ -77,16 +77,24 @@ const CreateEditModal = (props: IProps) => {
             <Col span={24}>
               {/* <Form.Item label='地址id'>
                 {getFieldDecorator('aid', {
-           
+
                 })(<Input />)}
               </Form.Item> */}
-              <Form.Item label='地区id'>
+              <Form.Item label='组委'>
                 {getFieldDecorator('aid', {
-                       initialValue: memoModalData.aid || '',
-                       rules: [{ required: true, message: '必填项' }],
+                  initialValue: memoModalData.aid || '',
+                  rules: [{ required: true, message: '必填项' }],
                 })(<Select allowClear>
                   {
-                    Array.isArray(areas) && areas.map((item, index) => <Select.Option key={item.id} value={item.id}>{item.aname}</Select.Option>)
+                    Array.isArray(areas) && areas.map((item, index) => {
+                      let dom = null;
+                      if (userInfo.mtype == '1') {
+                        dom = <Select.Option key={item.id} value={item.id}>{item.aname}</Select.Option>;
+                      } else {
+                        dom = userInfo.aid == item.id ? <Select.Option key={item.id} value={item.id}>{item.aname}</Select.Option> : null;
+                      }
+                      return dom;
+                    })
                   }
                 </Select>)}
               </Form.Item>

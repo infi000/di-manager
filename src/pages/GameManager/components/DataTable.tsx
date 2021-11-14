@@ -34,7 +34,7 @@ const DataTable = (props: IProps) => {
   const fields = () => (
     <>
       <Select
-        label='地址id'
+        label='组委'
         id='aid'
         msg='full'
         allowClear
@@ -188,7 +188,7 @@ const DataTable = (props: IProps) => {
       dataIndex: 'thumbinal',
       width: 180,
       render: (_, record) => {
-        const params = encodeURIComponent(`sid=${record.id}&aid=${record.aid}&bg=${record.thumbinal}`);
+        const params = encodeURIComponent(`sid=${record.id}&aid=${record.aid}&bg=${record.thumbinal}&title=${record.title}`);
         const url = `${HOST_H5}/leaderLogin?${params}`;
         return <a href={url} target='_blank' rel='noreferrer'>{url}</a>;
       }
