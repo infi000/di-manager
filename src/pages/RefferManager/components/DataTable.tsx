@@ -103,7 +103,7 @@ const DataTable = (props: IProps) => {
     },
     {
       title: '组委',
-      dataIndex: 'tid',
+      dataIndex: 'aname',
       width: 180,
     },
     {
