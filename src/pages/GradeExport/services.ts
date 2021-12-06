@@ -13,7 +13,7 @@ export const serviceGetTableList = (params: ISearch) => fetch('/index.php/AdminA
  * @param params
  * @returns
  */
-export const serviceGetSdict = (params?: {sid: string}) => fetch('/index.php/AdminApi/Teamwork/sdict', { params, type: 'POST' });
+export const serviceGetSdict = (params?: {sid?: string; aid?: string}) => fetch('/index.php/AdminApi/Teamwork/sdict', { params, type: 'POST' });
 
 /**
  * 获取比赛下字典项Teamwork/dict

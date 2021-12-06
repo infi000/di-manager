@@ -2,12 +2,12 @@ import fetch from '@/utils/fetch';
 
 /**
  * 获取用户信息
- * @returns 
+ * @returns
  */
 export const serviceGetUserInfo = () => fetch('/index.php/AdminApi/User/refresh');
 
 /**
  * 获取地区
- * @returns 
+ * @returns
  */
-export const serviceGetAreas = () => fetch('/index.php/AdminApi/Area/areas');
+export const serviceGetAreas = (params: {aid?: string}) => fetch('/index.php/AdminApi/Area/areas', { params });

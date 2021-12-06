@@ -19,7 +19,7 @@ const formItemLayout = {
 
 
 const CreateEditModal = (props: IProps) => {
-  const { modalData, postSetCode } = props;
+  const { modalData, postSetCode, userInfo } = props;
   const { validateFields, getFieldDecorator } = props.form;
 
 
@@ -27,8 +27,8 @@ const CreateEditModal = (props: IProps) => {
    * 取消
    */
   const handleCancel = () => {
-    props.updateModalData({ data: {}, show: false })
-  }
+    props.updateModalData({ data: {}, show: false });
+  };
   /**
    * 新建/编辑
    */
@@ -36,38 +36,42 @@ const CreateEditModal = (props: IProps) => {
     validateFields((err, val) => {
       console.log(val);
       if (!err) {
+        const pix =  userInfo.mtype == '2' ? '185-临' : '185-';
+        const tcode = `${pix}${val.tcode}`;
         const tid = modalData.data;
-        postSetCode({tid, ...val});
+        postSetCode({ tid, ...val,tcode});
       }
-    })
-  }
-  return <div>
-    <Modal
-      style={{ top: '8%' }}
-      width={400}
-      visible={modalData.show}
-      title='设置队伍挑战号'
-      onCancel={handleCancel}
-      footer={
-        <Button className='cancel-button' onClick={handleOk}>
-          提交
-      </Button>
-      }
-    >
-      <Form className='sofa-modal-form' {...formItemLayout}>
-        <Row>
-          <Col span={24}>
-            <Form.Item label='队伍挑战号'>
-              {getFieldDecorator('tcode', {
-                rules: [{ required: true, message:'必填项' },],
-              })(<Input />)}
-            </Form.Item>
-          </Col>
-        </Row>
-      </Form>
-    </Modal>
-  </div>
-}
+    });
+  };
+  return (
+    <div>
+      <Modal
+        style={{ top: '8%' }}
+        width={400}
+        visible={modalData.show}
+        title='设置队伍挑战号'
+        onCancel={handleCancel}
+        footer={(
+          <Button className='cancel-button' onClick={handleOk}>
+            提交
+          </Button>
+      )}
+      >
+        <Form className='sofa-modal-form' {...formItemLayout}>
+          <Row>
+            <Col span={24}>
+              <Form.Item label='队伍挑战号'>
+                {getFieldDecorator('tcode', {
+                  rules: [{ required: true, message: '必填项' }],
+                })(<Input addonBefore={userInfo.mtype == '2' ? '185-临' : '185-'} />)}
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </Modal>
+    </div>
+  );
+};
 
 const injectStore: [] = withStore('basic', NAME_SPACE);
 

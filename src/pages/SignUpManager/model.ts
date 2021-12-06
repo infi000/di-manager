@@ -96,8 +96,10 @@ export const model = {
         store.updateTablePage(page);
         store.getTableList();
       },
-      getSdic(params?: { sid: string}) {
-        serviceGetSdict(params).then((d: { sdata: any; }) => {
+      getSdic(params?: { sid: string }) {
+        const { aid } = basic.state().userInfo;
+
+        serviceGetSdict({ ...params, aid }).then((d: { sdata: any; }) => {
           const { sdata } = d;
           store.updateSdictMap(sdata);
         });

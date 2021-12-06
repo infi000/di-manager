@@ -102,7 +102,9 @@ export const model = {
         store.getTableList({ show: false, data: { uids: '' }, type: 'batchAdd' },);
       },
       getSdic(params?: { sid: string}) {
-        serviceGetSdict(params).then((d: { sdata: any; }) => {
+        console.log('basic',basic.state());
+        const { aid } = basic.state().userInfo;
+        serviceGetSdict({ ...params, aid }).then((d: { sdata: any; }) => {
           const { sdata } = d;
           store.updateSdictMap(sdata);
         });

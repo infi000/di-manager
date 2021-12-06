@@ -25,6 +25,8 @@ export interface ICreateParamsBatch {
       describe: string; // 评分标准内容
       maxscore: string; // 评分最大分值
       sort?: string;
+      scores?: string; // 可选的分数值；多个以英文逗号隔开，如0,10,20,30
+      isselscore?: string; //  1或0；1设置可选分数值；0设置最大分数值
     }>
   }>
 }
@@ -53,6 +55,8 @@ export interface ITableItem {
     describe: string; // 评分标准内容
     maxscore: string; // 评分最大分值
     sort?: string;
+    scores?: string; // 可选的分数值；多个以英文逗号隔开，如0,10,20,30
+    isselscore?: string; //  1或0；1设置可选分数值；0设置最大分数值
   }>
 }
 

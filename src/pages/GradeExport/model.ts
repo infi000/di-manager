@@ -80,14 +80,15 @@ export const model = {
           store.updateTableListTotal(total || jds.length);
         }).catch((err: any) => console.log(err));
       },
-      getSdic(params?: { sid: string}) {
-        serviceGetSdict(params).then((d: { sdata: any; }) => {
+      getSdic(params?: { sid: string }) {
+        const { aid } = basic.state().userInfo;
+        serviceGetSdict({ ...params, aid }).then((d: { sdata: any }) => {
           const { sdata } = d;
           store.updateSdictMap(sdata);
         });
       },
-      getDic(params: { sid: string}) {
-        serviceGetdict(params).then((d: { qdata: any; adata: any; }) => {
+      getDic(params: { sid: string }) {
+        serviceGetdict(params).then((d: { qdata: any; adata: any }) => {
           const { qdata, adata } = d;
           store.updatedictQMap(qdata);
           store.updatedictAMap(adata);

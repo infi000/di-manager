@@ -37,4 +37,4 @@ export const serviceGetInvoiceDetail = (params: {tid: string}): Promise<IInvoice
  * @param params
  * @returns
  */
- export const serviceGetSdict = (params?: {sid: string}) => fetch('/index.php/AdminApi/Teamwork/sdict', { params, type: 'POST' });
+ export const serviceGetSdict = (params?: {sid?: string; aid: string}) => fetch('/index.php/AdminApi/Teamwork/sdict', { params, type: 'POST' });

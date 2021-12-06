@@ -8,7 +8,7 @@ const DEFAULT_USERINFO: Partial<IUserInfo> = {
   uid: undefined,
   status: undefined,
   ctime: undefined
-}
+};
 
 const model = {
   state: {
@@ -44,8 +44,8 @@ const model = {
       updateaAreas(params: any) {
         basic.setState({ areas: params });
       },
-      async getAreas(){
-        const data = await serviceGetAreas();
+      async getAreas(params: {aid?: string}) {
+        const data = await serviceGetAreas(params);
         if (Array.isArray(data.areas)) {
           basic.updateaAreas(data.areas);
         }
@@ -57,13 +57,13 @@ const model = {
           if (d) {
             basic.updateUserInfo({ ...d });
           }
- 
+          basic.getAreas({ aid: d.aid });
           basic.setState({ isLoading: false });
         } catch (e) {
           basic.setState({ isLoading: false });
         }
       },
-    }
+    };
   }
 };
 

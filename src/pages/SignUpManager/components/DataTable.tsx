@@ -27,7 +27,8 @@ const DataTable = (props: IProps) => {
     getInvoiceDetail,
     getSdic,
     tablePage,
-    serchParams
+    serchParams,
+    userInfo
   } = props;
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const history = useHistory();
@@ -44,7 +45,11 @@ const DataTable = (props: IProps) => {
    * 挑战号
    * @param status
    */
-  const handleSetCode = (tid: string) => {
+  const handleSetCode = (tid: string, tcode?:string) => {
+    if(tcode &&  userInfo.mtype == '2'){
+      message.warn('已设置挑战号')
+      return 
+    }
     updateModalData({ show: true, data: tid });
   };
 
@@ -135,11 +140,11 @@ const DataTable = (props: IProps) => {
       width: 330,
       fixed: 'right',
       render: (_: string, record: ITableItem) => {
-        const { id } = record;
+        const { id,tcode } = record;
         return (
           <TableBtnGroup>
             <TableBtn onClick={() => { handlePayType(id); }}>设置支付状态</TableBtn>
-            <TableBtn onClick={() => { handleSetCode(id); }}>设置挑战号</TableBtn>
+            <TableBtn onClick={() => { handleSetCode(id,tcode); }}>设置挑战号</TableBtn>
             <TableBtn onClick={() => { handleViewInvoice(id); }}>发票信息</TableBtn>
 
           </TableBtnGroup>

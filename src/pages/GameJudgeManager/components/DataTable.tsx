@@ -122,6 +122,17 @@ const DataTable = (props: IProps) => {
       width: 200,
     },
     {
+      title: '可选的分数值',
+      dataIndex: 'scores',
+      width: 200,
+    },
+    {
+      title: '使用评分类型',
+      dataIndex: 'isselscore',
+      width: 200,
+      render: (_: string, record: ITableItem) => (<span>{_ == '1'? '可选分数':'最大分数'}</span>),
+    },
+    {
       title: '操作',
       dataIndex: 'action',
       width: 200,

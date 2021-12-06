@@ -31,8 +31,8 @@ const CreateEditModal = (props: IProps) => {
    * 取消
    */
   const handleCancel = () => {
-    props.updateModalData({ data: {}, show: false })
-  }
+    props.updateModalData({ data: {}, show: false });
+  };
   /**
    * 新建/编辑
    */
@@ -48,8 +48,8 @@ const CreateEditModal = (props: IProps) => {
           postCreate(values);
         }
       }
-    })
-  }
+    });
+  };
   /**
    * 添加ch长度
    */
@@ -58,51 +58,70 @@ const CreateEditModal = (props: IProps) => {
       const _arr = [...arr];
       _arr.push('');
       return _arr;
-    })
-  }
-  return <div>
-    <Modal
-      style={{ top: '8%' }}
-      width={800}
-      visible={modalData.show}
-      title={modalData.type === 'create' ? '新建' : '编辑'}
-      onCancel={handleCancel}
-      footer={
-        <Button className='cancel-button' onClick={handleOk}>
-          提交
-      </Button>
-      }
-    >
-      <Form className='sofa-modal-form' {...formItemLayout}>
-        {
+    });
+  };
+  return (
+    <div>
+      <Modal
+        style={{ top: '8%' }}
+        width={800}
+        visible={modalData.show}
+        title={modalData.type === 'create' ? '新建' : '编辑'}
+        onCancel={handleCancel}
+        footer={(
+          <Button className='cancel-button' onClick={handleOk}>
+            提交
+          </Button>
+      )}
+      >
+        <Form className='sofa-modal-form' {...formItemLayout}>
+          {
           modalData.type === 'create'
-          && <Row>
+          && (
+          <Row>
             <Col span={24}>
               <Form.Item label='父标准描述'>
                 {getFieldDecorator('title', {
-                  rules: [{ required: true, message: '必填项' },],
+                  rules: [{ required: true, message: '必填项' }],
                 })(<Input />)}
               </Form.Item>
             </Col>
             {
-              ch.map((_: string, index: number) => {
-                return <>
+              ch.map((_: string, index: number) => (
+                <>
                   <Col span={20} offset={4}>
                     <Form.Item label={`评分标准内容${index + 1}`}>
                       {getFieldDecorator(`ch[${index}].describe`, {
-                        rules: [{ required: true, message: '必填项' },],
+                        rules: [{ required: true, message: '必填项' }],
                       })(<Input />)}
                     </Form.Item>
                   </Col>
                   <Col span={20} offset={4}>
                     <Form.Item label={`评分最大分值${index + 1}`}>
                       {getFieldDecorator(`ch[${index}].maxscore`, {
-                        rules: [{ required: true, message: '必填项' },],
+                        rules: [{ required: true, message: '必填项' }],
                       })(<InputNumber />)}
                     </Form.Item>
                   </Col>
+                  <Col span={20} offset={4}>
+                    <Form.Item label={`可选分数${index + 1}`}>
+                      {getFieldDecorator(`ch[${index}].scores`, {
+                        rules: [{ required: true, message: '必填项' }],
+                      })(<Input placeholder='可选的分数值；多个以英文逗号隔开，如0,10,20,30' />)}
+                    </Form.Item>
+                  </Col>
+                  <Col span={20} offset={4}>
+                    <Form.Item label={`使用评分类型${index + 1}`}>
+                      {getFieldDecorator(`ch[${index}].isselscore`, {
+                        rules: [{ required: true, message: '必填项' }],
+                      })(<Select>
+                        <Select.Option value='0'>最大分数</Select.Option>
+                        <Select.Option value='1'>可选分数</Select.Option>
+                      </Select>)}
+                    </Form.Item>
+                  </Col>
                 </>
-              })
+              ))
             }
             <Col span={24}>
               <Form.Item label='新增子标准'>
@@ -110,30 +129,51 @@ const CreateEditModal = (props: IProps) => {
               </Form.Item>
             </Col>
           </Row>
+          )
         }
-        {
+          {
           modalData.type === 'addItem'
-          && <Row>
+          && (
+          <Row>
             <Col span={24}>
-              <Form.Item label={`评分标准内容`}>
-                {getFieldDecorator(`describe`, {
-                  rules: [{ required: true, message: '必填项' },],
+              <Form.Item label='评分标准内容'>
+                {getFieldDecorator('describe', {
+                  rules: [{ required: true, message: '必填项' }],
                 })(<Input />)}
               </Form.Item>
             </Col>
             <Col span={24}>
-              <Form.Item label={`评分最大分值`}>
-                {getFieldDecorator(`maxscore`, {
-                  rules: [{ required: true, message: '必填项' },],
+              <Form.Item label='评分最大分值'>
+                {getFieldDecorator('maxscore', {
+                  rules: [{ required: true, message: '必填项' }],
                 })(<InputNumber />)}
               </Form.Item>
             </Col>
+            <Col span={24}>
+              <Form.Item label='可选分数'>
+                {getFieldDecorator('scores', {
+                  rules: [{ required: true, message: '必填项' }],
+                })(<Input placeholder='可选的分数值；多个以英文逗号隔开，如0,10,20,30' />)}
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item label='使用评分类型'>
+                {getFieldDecorator('isselscore', {
+                  rules: [{ required: true, message: '必填项' }],
+                })(<Select>
+                  <Select.Option value='0'>最大分数</Select.Option>
+                  <Select.Option value='1'>可选分数</Select.Option>
+                </Select>)}
+              </Form.Item>
+            </Col>
           </Row>
+          )
         }
-      </Form>
-    </Modal>
-  </div>
-}
+        </Form>
+      </Modal>
+    </div>
+  );
+};
 
 const injectStore: [] = withStore('basic', NAME_SPACE);
 
