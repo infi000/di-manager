@@ -52,7 +52,7 @@ const GameFileDesc = load(() => import('@/pages/GameFileDesc'));
 const RefferManager = load(() => import('@/pages/RefferManager'));
 const RefferAllot = load(() => import('@/pages/RefferAllot'));
 const LeaderManager = load(() => import('@/pages/LeaderManager'));
-const GameRelease = load(() => import('@/pages/GameRelease'));
+const NewsManager = load(() => import('@/pages/NewsManager'));
 const SignUpManager = load(() => import('@/pages/SignUpManager'));
 const GradeExport = load(() => import('@/pages/GradeExport'));
 const GradeExportBlank = load(() => import('@/pages/GradeExport/index_blank'));
@@ -135,6 +135,12 @@ export const menus: TMenuItem[] = [
     component: GradeExport,
     isMenu: true,
     name: '成绩导出',
+  },
+  {
+    path: '/newsManager',
+    component: NewsManager,
+    isMenu: true,
+    name: '通知管理',
   },
 ];
 

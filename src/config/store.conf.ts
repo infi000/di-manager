@@ -24,6 +24,8 @@ import leaderManager from '@/pages/LeaderManager/model';
 import signUpManager from '@/pages/SignUpManager/model';
 // 成绩导出
 import GradeExport from '@/pages/GradeExport/model';
+// 通知管理
+import NewsManager from '@/pages/NewsManager/model';
 
 
 const models = {
@@ -39,7 +41,8 @@ const models = {
   ...refferManager,
   ...refferAllot,
   ...leaderManager,
-  ...GradeExport
+  ...GradeExport,
+  ...NewsManager,
 };
 
 export default createStore(models);
